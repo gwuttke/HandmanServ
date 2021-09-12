@@ -2,13 +2,19 @@ package de.gtwsp21.handmanserv.domain;
 
 import java.util.List;
 
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
+@Entity
 @Table(name = "Berater")
+@PrimaryKeyJoinColumns({
+    @PrimaryKeyJoinColumn(name="benutzer_id", 
+        referencedColumnName="id")})
 public class Berater extends Benutzer {
 
 	@ManyToMany

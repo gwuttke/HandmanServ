@@ -1,9 +1,16 @@
 package de.gtwsp21.handmanserv.domain;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
+@Entity
 @Table(name = "Versicherungsnehmer")
+@PrimaryKeyJoinColumns({
+        @PrimaryKeyJoinColumn(name="Benutzer_id", 
+            referencedColumnName="id")})
 public class Versicherungsnehmer extends Benutzer {
 
 	@OneToOne

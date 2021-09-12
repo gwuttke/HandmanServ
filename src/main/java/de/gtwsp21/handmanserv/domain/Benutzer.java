@@ -2,14 +2,19 @@ package de.gtwsp21.handmanserv.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+@Entity
 @Table(name = "Benutzer")
-@MappedSuperclass
+@Inheritance(
+    strategy = InheritanceType.JOINED
+)
 public abstract class Benutzer {
 
 	@Id
