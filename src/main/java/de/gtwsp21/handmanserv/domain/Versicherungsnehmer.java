@@ -13,6 +13,15 @@ import javax.persistence.Table;
             referencedColumnName="id")})
 public class Versicherungsnehmer extends Benutzer {
 
+	public Versicherungsnehmer() {
+		super();
+	}
+
+	public Versicherungsnehmer(String nachname, String vorname, String eMailadresse, String passwort, String anrede,
+			String telefonnummer) {
+		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
+	}
+
 	@OneToOne
 	private Adresse adresse;
 	
@@ -21,12 +30,12 @@ public class Versicherungsnehmer extends Benutzer {
 	private String policennummer;
 	
 	@Override
-	int getRolleNr() {
+	public int getRolleNr() {
 		return 3;
 	}
 
 	@Override
-	String getRolleName() {
+	public String getRolleName() {
 		return "Versicherungsnehmer";
 	}
 
@@ -52,6 +61,11 @@ public class Versicherungsnehmer extends Benutzer {
 
 	public void setPolicennummer(String policennummer) {
 		this.policennummer = policennummer;
+	}
+	
+	@Override
+	public String[] getRolleForSecurity() {
+		return new String[] {ROLE_NAME_VERSICHERUNGSNEHMER};
 	}
 
 }

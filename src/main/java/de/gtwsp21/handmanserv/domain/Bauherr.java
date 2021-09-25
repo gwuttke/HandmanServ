@@ -16,6 +16,15 @@ import javax.persistence.Table;
     @PrimaryKeyJoinColumn(name="Benutzer_id", 
         referencedColumnName="id")})
 public class Bauherr extends Benutzer {
+	
+	public Bauherr() {
+		super();
+	}
+
+	public Bauherr(String nachname, String vorname, String eMailadresse, String passwort, String anrede,
+			String telefonnummer) {
+		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
+	}
 
 	@ManyToMany
 	@JoinTable(name = "Gebiet_Bauherr",
@@ -24,13 +33,18 @@ public class Bauherr extends Benutzer {
 	private List<Gebiet> gebiete;
 	
 	@Override
-	int getRolleNr() {
+	public int getRolleNr() {
 		return 2;
 	}
 
 	@Override
-	String getRolleName() {
+	public String getRolleName() {
 		return "Bauherr";
+	}
+	
+	@Override
+	public String[] getRolleForSecurity() {
+		return new String[] {ROLE_NAME_BAUHERR};
 	}
 
 }

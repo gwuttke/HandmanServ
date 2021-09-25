@@ -6,4 +6,6 @@ import de.gtwsp21.handmanserv.domain.Benutzer;
 
 public interface BenutzerRepository extends JpaRepository<Benutzer, Long> {
 
+	Benutzer findByeMailadresse(String email);
+	
 }

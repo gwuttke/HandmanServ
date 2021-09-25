@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<headth:include="fragments/head :: headFragment (pageTitle='')"></head>
+<body>
+    Guten Tag <span th:text="|${benutzer.anrede} ${benutzer.nachname}|"></span>,
+   </br>
+   Wir freuen uns Sie bei uns Willkommen zu hei&szlig;en.
+   </br>
+   Bitte bestätigen Sie bis sp&auml;terstens ${ablauf} ihre Anmeldung mit diesem <a th:href="@{/user/resetPasswort(token=${token})}">Link</a> um Ihrem Konto noch ein Passwort zu hinterlegen, damit Sie unsere Leistungen genießen können.
+   </br>
+   </br>
+   Mit freundlichen Grüßen
+   </br>
+   Ihr HandmanServ-Team
+</body>
+</html>
