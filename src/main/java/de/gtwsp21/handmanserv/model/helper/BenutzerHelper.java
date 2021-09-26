@@ -1,5 +1,7 @@
 package de.gtwsp21.handmanserv.model.helper;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,6 +29,11 @@ public class BenutzerHelper {
 			.map(b -> new ImmutablePair<>(b.getRolleNr(), b.getRolleName())).collect(Collectors.toList());
 		
 		return l;
+	}
+	
+	public String[] getAllSecurityRoles() {	
+		List<String> collect = Stream.of(allBenutzer).map(b -> Arrays.asList(b.getRolleForSecurity())).flatMap(Collection::stream).collect(Collectors.toList());
+		return collect.toArray(new String[collect.size()]);
 	}
 
 }

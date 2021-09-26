@@ -7,7 +7,7 @@ INSERT INTO `itmitarbeiter`(`benutzer_id`) VALUES (LAST_INSERT_ID());
 INSERT INTO `authorities` (`email`, `berechtigung`) VALUES ('sebastian.pfeifer@hoefischebv.de','ROLE_ITMitarbeiter');
 -- Tobias
 INSERT INTO `benutzer`(`anrede`, `e_mailadresse`, `enabled`, `letzte_anmeldung`, `nachname`, `passwort`, `telefonnummer`, `vorname`) VALUES 
-		      ('Herr','tobias.gruener@hoefischebv.de',1,null,'Grüner','$2a$10$oc4auLofic8mpnZVVbL8Nu9RFb8GVJigbE6dhk1npC8jBMHCLQAnS','089456241790','Tobias');
+		      ('Herr','tobias.gruener@hoefischebv.de',1,null,'GrÃ¼ner','$2a$10$oc4auLofic8mpnZVVbL8Nu9RFb8GVJigbE6dhk1npC8jBMHCLQAnS','089456241790','Tobias');
 
 INSERT INTO `itmitarbeiter`(`benutzer_id`) VALUES (LAST_INSERT_ID());
 

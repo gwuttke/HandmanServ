@@ -12,6 +12,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Benutzer")
@@ -19,19 +20,19 @@ import javax.persistence.Table;
     strategy = InheritanceType.JOINED
 )
 public abstract class Benutzer {
-	
+	@Transient
 	private final String ROLE_PREFIX="ROLE_";
-	
+	@Transient
 	final String ROLE_NAME_BAUHERR=ROLE_PREFIX +"BAUHERR";
-	
+	@Transient
 	final String ROLE_NAME_IT_MITARBEITER=ROLE_PREFIX +"ITMitarbeiter";
-	
+	@Transient
 	final String ROLE_NAME_VERSICHERUNGSNEHMER=ROLE_PREFIX +"VERSICHERUNGSNEHMER";
-	
+	@Transient
 	final String ROLE_NAME_BACKOFFICE=ROLE_PREFIX +"BACKOFFICE";
-	
+	@Transient
 	final String ROLE_NAME_BERATER=ROLE_PREFIX + "BERATER";
-	
+	@Transient
 	final String ROLE_NAME_HANDWERKER=ROLE_PREFIX + "HANDWERKER";
 	
 	@Id
@@ -144,10 +145,11 @@ public abstract class Benutzer {
 		this.telefonnummer = telefonnummer;
 	}
 
+	@Transient
 	public abstract int getRolleNr();
-	
+	@Transient
 	public abstract String getRolleName();
-	
+	@Transient
 	public abstract String[] getRolleForSecurity();
 	
 }
