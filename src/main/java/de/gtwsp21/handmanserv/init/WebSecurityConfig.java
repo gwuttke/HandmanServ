@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.repository.BenutzerRepository;
@@ -28,11 +29,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	   http.authorizeRequests().antMatchers("/**/*.html").denyAll()
-    	      .and()
+    	   http.authorizeRequests().anyRequest().authenticated().and()
+    	   //.antMatchers("/**/*.html").denyAll()
+    	     // .and()
     	      // some more method calls
     	      .formLogin()
-                .successHandler(new AuthenticationSuccessHandler() {
+                .successHandler(new SavedRequestAwareAuthenticationSuccessHandler() {
  
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -40,6 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                    	Benutzer b =benutzerRepository.findByeMailadresse(((User)authentication.getPrincipal()).getUsername());
 	                    	b.setLetzteAnmeldung(LocalDateTime.now());
 	                    	benutzerRepository.save(b);
+	                    	
+	                    	super.onAuthenticationSuccess(request,response, authentication);
                     	}
                 });
     }
