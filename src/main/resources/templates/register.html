@@ -3,7 +3,6 @@
 	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
    		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-   		
 	</head>
 	<body class="" style="background-color: rgba(27, 30, 31, 1.00)">
 	
@@ -59,25 +58,19 @@
 	<!-- form -->
 	<div class="col-12 px-4 py-5" id="custom-cards">
 		<h2 class="pb-2 border-bottom text-white">Registrierung</h2>
-		
+		     	  
+   	
 		<div class="row">
 			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 col-lg-8">
-		      <form class="row g-3 rounded" style="background-color: rgba(27, 30, 31, 1.00)">
-		      	   
-		      	   
-		      	   
-		      	   <div class="col-md-12">
-				    <label for="inputRolle" class="form-label text-white">Rolle</label>
-				    <select id="inputRolle" class="selectpicker form-control">
-				      <option selected value="0">test</option>
-				      <option value="1">test2</option>
-				      <option value="2">test3</option>
-				    </select>
-				  </div>
+		      <!--<form class="row g-3 rounded" style="background-color: rgba(27, 30, 31, 1.00)">-->
+		      <form class="row g-3 rounded">
+	
+				  <h3 class="kundenInfos pb-2 text-white">Anlage Kunde</h3>
+				  <h3 class="beraterInfos pb-2 text-white d-none">Anlage Berater</h3>
+				  <h3 class="bauleiterInfos pb-2 text-white d-none">Anlage Bauleiter</h3>
+				  <h3 class="handwerkerInfos pb-2 text-white d-none">Anlage Handwerker</h3>
 				  
-				  
-				  
-				  
+				  <!-- General -->
 		      	  <div class="col-md-2">
 				    <label for="inputAnrede" class="form-label text-white">Anrede</label>
 				    <select id="inputAnrede" class="form-control">
@@ -96,34 +89,117 @@
 				    <label for="inputEmail" class="form-label text-white">E-Mail</label>
 				    <input type="email" class="form-control" id="inputEmail" placeholder="Hans.Meier@gmx.de">
 				  </div>
-				  <div class="col-md-6">
-				    <label for="inputPolice" class="form-label text-white">Police Nummer</label>
-				    <input type="text" class="form-control" id="inputPolice" placeholder="542974">
-				  </div>
-				  <div class="col-md-10">
-				    <label for="inputStrasse" class="form-label text-white">Stra&szlig;e</label>
-				    <input type="text" class="form-control" id="inputStrasse" placeholder="Tannenweg">
-				  </div>
-				  <div class="col-md-2">
-				    <label for="inputHausnummer" class="form-label text-white">Nummer</label>
-				    <input type="text" class="form-control" id="inputHausnummer" placeholder="26">
-				  </div>
-				  <div class="col-md-2">
-				    <label for="inputPlz" class="form-label text-white">Postleitzahl</label>
-				    <input type="text" class="form-control" id="inputPlz" placeholder="10318">
-				  </div>
-				  <div class="col-md-6">
-				    <label for="inputOrt" class="form-label text-white">Ort</label>
-				    <input type="text" class="form-control" id="inputOrt" placeholder="Berlin">
-				  </div>
-				  <div class="col-md-4 ">
-				    <label for="inputLand" class="form-label text-white">Land</label>
-				    <select id="inputLand" class="form-select" disabled>
-				      <option selected>Deutschland</option>
-				      <option>...</option>
+				 
+				  
+				   <!-- Rollenwechsel -->
+		      	  <div class="col-md-6">
+				    <label for="inputRolle" class="form-label text-white">Rolle</label>
+				    <select id="inputRolle" onchange="func(this)" class="form-select">
+				      <option selected value="1">Kunde</option>
+				      <option value="2">Berater</option>
+				      <option value="3">Bauleiter</option>
+				      <option value="4">Handwerker</option>
 				    </select>
 				  </div>
+				  <div class="col-md-6"> 
+				  </div>
+				  
+				  <!-- Funktion Rollenwechsel -->
+				  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+				  <script>
+				    function func(id)
+					{
+						if(id.value == 1){
+				    	$(".kundenInfos").removeClass("d-none");
+				    	$(".bauleiterInfos").addClass("d-none");
+				    	$(".beraterInfos").addClass("d-none");
+				    	$(".handwerkerInfos").addClass("d-none");}
+				    	else if (id.value == 2){
+						$(".beraterInfos").removeClass("d-none");
+						$(".bauleiterInfos").addClass("d-none");
+				    	$(".kundenInfos").addClass("d-none");
+				    	$(".handwerkerInfos").addClass("d-none");}
+				    	else if (id.value == 3){
+						$(".bauleiterInfos").removeClass("d-none");
+						$(".beraterInfos").addClass("d-none");
+				    	$(".kundenInfos").addClass("d-none");
+				    	$(".handwerkerInfos").addClass("d-none");}
+				    	else if (id.value == 4){
+						$(".handwerkerInfos").removeClass("d-none")
+						$(".bauleiterInfos").addClass("d-none");
+						$(".beraterInfos").addClass("d-none");
+				    	$(".kundenInfos").addClass("d-none");}
+						else{}
+			
+					}
+				  </script>
+				  
+				  
+				 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+				  <!-- Bauleiter -->
+				  <div class="bauleiterInfos col-md-12 d-none" id="bauleiterInfos">
+					  <div class="col-md-6">
+						  <div class="row d-flex">
+						  	<label for="inputBereich" class="form-label text-white align-items-start">Zust&auml;ndigkeitsbereich</label>
+						  	<select id="inputBereich" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
+							      <option>test</option>
+							      <option>test2</option>
+					    	</select>
+						  </div>
+					  </div>
+				  </div>	
+				  
+
+				  <!-- Berater -->
+				  <div class="beraterInfos col-md-12 d-none" id="beraterInfos">
+					  <div class="col-md-6">
+						<div class="row d-flex">
+							<label for="inputStandort" class="form-label text-white align-items-start">Unternehmensstandort</label>
+							<select id="inputStandort" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
+								  <option>test</option>
+								  <option>test2</option>
+						    </select>
+				  		</div>
+					  </div>
+				  </div>
+				  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+				  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>				  
+				  
+				  <!-- Kunde -->
+				  <div class="col-md-12">
+					  <div class="kundenInfos row" id="kundenInfos">
+						  <div class="col-md-6">
+						    <label for="inputPolice" class="form-label text-white">Police Nummer</label>
+						    <input type="text" class="form-control" id="inputPolice" placeholder="542974">
+						  </div>
+						  <div class="col-md-10">
+						    <label for="inputStrasse" class="form-label text-white">Stra&szlig;e</label>
+						    <input type="text" class="form-control" id="inputStrasse" placeholder="Tannenweg">
+						  </div>
+						  <div class="col-md-2">
+						    <label for="inputHausnummer" class="form-label text-white">Nummer</label>
+						    <input type="text" class="form-control" id="inputHausnummer" placeholder="26">
+						  </div>
+						  <div class="col-md-2">
+						    <label for="inputPlz" class="form-label text-white">Postleitzahl</label>
+						    <input type="text" class="form-control" id="inputPlz" placeholder="10318">
+						  </div>
+						  <div class="col-md-6">
+						    <label for="inputOrt" class="form-label text-white">Ort</label>
+						    <input type="text" class="form-control" id="inputOrt" placeholder="Berlin">
+						  </div>
+						  <div class="col-md-4 ">
+						    <label for="inputLand" class="form-label text-white">Land</label>
+						    <select id="inputLand" class="form-select" disabled>
+						      <option selected>Deutschland</option>
+						      <option>...</option>
+						    </select>
+						  </div>
+					  </div>
+				  </div>
 	
+				  <div class="col-12">
+				  </div>
 				  <div class="col-12">
 				    <button type="submit" class="btn btn-primary">Abschicken</button>
 				  </div>
