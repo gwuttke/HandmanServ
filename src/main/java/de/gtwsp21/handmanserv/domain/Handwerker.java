@@ -17,6 +17,18 @@ import javax.persistence.Table;
         referencedColumnName="id")})
 public class Handwerker extends Benutzer {
 
+	public Handwerker() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Handwerker(String nachname, String vorname, String eMailadresse, String passwort, String anrede,
+			String telefonnummer,List<Gebiet> gebiete,List<Gewerk> gewerke) {
+		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
+		this.gebiete = gebiete;
+		this.gewerke = gewerke;
+	}
+
 	@ManyToMany
 	@JoinTable(name = "Gebiet_Handwerker",
     joinColumns = @JoinColumn(name = "HandwerkerId"),
@@ -40,12 +52,12 @@ public class Handwerker extends Benutzer {
 	}
 
 	@Override
-	int getRolleNr() {
+	public int getRolleNr() {
 		return 4;
 	}
 	
 	@Override
-	String getRolleName() {
+	public String getRolleName() {
 		return "Handwerker";
 	}
 
@@ -65,6 +77,10 @@ public class Handwerker extends Benutzer {
 		this.gewerke = gewerke;
 	}
 
+	@Override
+	public String[] getRolleForSecurity() {
+		return new String[] {ROLE_NAME_HANDWERKER};
+	}
 
 
 }

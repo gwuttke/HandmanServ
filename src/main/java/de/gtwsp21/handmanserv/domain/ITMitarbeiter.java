@@ -12,14 +12,28 @@ import javax.persistence.Table;
         referencedColumnName="id")})
 public class ITMitarbeiter extends Benutzer{
 
+	public ITMitarbeiter() {
+		super();
+	}
+
+	public ITMitarbeiter(String nachname, String vorname, String eMailadresse, String passwort, String anrede,
+			String telefonnummer) {
+		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
+	}
+
 	@Override
-	int getRolleNr() {
+	public int getRolleNr() {
 		return 6;
 	}
 
 	@Override
-	String getRolleName() {
+	public String getRolleName() {
 		return "IT";
 	}
 
+	@Override
+	public String[] getRolleForSecurity() {
+		return new String[] {ROLE_NAME_IT_MITARBEITER};
+	}
+	
 }

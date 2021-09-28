@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
+	</head>
+	<body>
+		<div class="container">
+			<!--<th:block th:include="fragments/header :: header">header</th:block>-->
+			<h1>Registration</h1>
+			<form role="form" th:action="@{user/registrieren}" th:object="${benutzerCommand}" method="post">
+				<div class="row col-sm-12">
+					<div class="form-group col-sm-6"> 
+		  				<label class="control-label">Benutzertyp</label>
+		  				<select name="rolle" class="form-select" aria-label="Benutzertyp">
+							<option value="0" selected>Bitte ausw&auml;en</option>
+						 	<option th:each="btyp: ${data.benutzertyp}" th:value="btyp.getLeft()" th:text="btyp.getRight()">One</option>
+						</select>
+						<div class="alert alert-danger" th:if="${#fields.hasErrors('rolle')}" th:errors="*{rolle}" />
+				  	</div>
+				</div>
+				<div class="row col-sm-12">
+					<div class="form-group col-sm-6"> 
+		  				<label class="control-label">Anrede</label>
+		  				<select name="anrede" class="form-select" aria-label="Benutzertyp">
+							<option value="0" selected>Bitte ausw&auml;en</option>
+						 	<option th:each="anrede: ${data.anreden}" th:value="anrede" th:text="anrede">One</option>
+						</select>
+						<div class="alert alert-danger" th:if="${#fields.hasErrors('anrede')}" th:errors="*{anrede}" />
+				  	</div>
+					<div class="form-group col-sm-4"> 
+		  				<label class="control-label">Nachnahme</label>
+		  				<div>
+		  					<input class="form-control" type="text" th:field="*{nachname}" id="txtNachname" placeholder="Nachname" required="required" />    
+							<div class="alert alert-danger" th:if="${#fields.hasErrors('nachname')}" th:errors="*{nachname}" />
+		  				</div>
+				  	</div>
+					<div class="form-group col-sm-4">
+						<label class="control-label">Vornahme</label>
+					   	<div> 
+							<input class="form-control" type="text" th:field="*{vorname}" id="txtVorname" placeholder="Vorname" required="required"/>
+							<div class="alert alert-danger" th:if="${#fields.hasErrors('vorname')}" th:errors="*{vorname}" />
+					 	</div>
+					</div>
+			  	</div>
+			  	<div class="row col-sm-12">
+					<div class="form-group col-sm-5">
+				  		<label class="control-label">Telefonnummer</label>
+				   		<div> 
+					    	<input class="form-control" type="text" th:field="*{telefonnummer}" placeholder="Telefonnummer" required="required"/>
+					  		<div class="alert alert-danger" th:if="${#fields.hasErrors('telefonnummer')}" th:errors="*{telefonnummer}" />
+				 		</div>
+				  	</div>
+					<div class="form-group col-sm-5">
+				  		<label class="control-label">e-Mail</label>
+					  	<div> 
+						    <input class="form-control" type="text" th:field="*{email}" id="txtEMail" placeholder="e-Mail" required="required"/>
+						    <div class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+						</div>
+					</div>
+				</div>
+				 <div class="row">
+				  <div class="form-group"> 
+					<button class="btn btn-lg btn-primary" type="submit" name="registration">Registration</button>
+				  </div>
+				 </div>
+			</form> 
+		</div>
+ 	</body>
+</html>

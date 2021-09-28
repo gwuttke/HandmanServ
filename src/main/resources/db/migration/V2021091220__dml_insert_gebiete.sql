@@ -1,4 +1,4 @@
-INSERT INTO gebiete(bereich,name) VALUES 
+INSERT INTO gebiet(bereich,name) VALUES 
 ('0','Sachsen,Thüringen,Sachsen-Anhalt,Brandenburg'),
 ('1','Mecklenburg-Vorpommern,Brandenburg,Berlin,Niedersachsen,Sachsen-Anhalt'),
 ('2','Schleswig-Holstein,Niedersachsen,Mecklenburg-Vorpommern,Bremen,Hamburg,Sachsen-Anhalt'),

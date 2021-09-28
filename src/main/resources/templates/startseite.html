@@ -1,0 +1,8 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
+	</head>
+	<body>
+		<p th:text="|Hallo Benutzer ${model.username}|" />
+ 	</body>
+</html>

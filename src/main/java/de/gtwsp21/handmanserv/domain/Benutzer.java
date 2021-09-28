@@ -1,6 +1,7 @@
 package de.gtwsp21.handmanserv.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Benutzer")
@@ -16,7 +20,21 @@ import javax.persistence.Table;
     strategy = InheritanceType.JOINED
 )
 public abstract class Benutzer {
-
+	@Transient
+	private final String ROLE_PREFIX="ROLE_";
+	@Transient
+	final String ROLE_NAME_BAUHERR=ROLE_PREFIX +"BAUHERR";
+	@Transient
+	final String ROLE_NAME_IT_MITARBEITER=ROLE_PREFIX +"ITMitarbeiter";
+	@Transient
+	final String ROLE_NAME_VERSICHERUNGSNEHMER=ROLE_PREFIX +"VERSICHERUNGSNEHMER";
+	@Transient
+	final String ROLE_NAME_BACKOFFICE=ROLE_PREFIX +"BACKOFFICE";
+	@Transient
+	final String ROLE_NAME_BERATER=ROLE_PREFIX + "BERATER";
+	@Transient
+	final String ROLE_NAME_HANDWERKER=ROLE_PREFIX + "HANDWERKER";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,6 +51,24 @@ public abstract class Benutzer {
 
 	private boolean enabled;
 	
+	@OneToMany
+	private List<Rolle> rolle;
+	
+	public Benutzer() {
+		super();
+	}
+	
+	public Benutzer(String nachname, String vorname, String eMailadresse, String passwort, String anrede,
+			String telefonnummer) {
+		this();
+		this.nachname = nachname;
+		this.vorname = vorname;
+		this.eMailadresse = eMailadresse;
+		this.passwort = passwort;
+		this.anrede = anrede;
+		this.telefonnummer = telefonnummer;
+	}
+
 	private LocalDateTime letzteAnmeldung;
 	
 	private String telefonnummer;
@@ -109,9 +145,11 @@ public abstract class Benutzer {
 		this.telefonnummer = telefonnummer;
 	}
 
-	abstract int getRolleNr();
-	
-	abstract String getRolleName();
-	
+	@Transient
+	public abstract int getRolleNr();
+	@Transient
+	public abstract String getRolleName();
+	@Transient
+	public abstract String[] getRolleForSecurity();
 	
 }
