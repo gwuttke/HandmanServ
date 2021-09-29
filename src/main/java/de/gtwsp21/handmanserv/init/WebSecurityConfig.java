@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import de.gtwsp21.handmanserv.domain.Benutzer;
@@ -29,12 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	   http.authorizeRequests().anyRequest().authenticated().and()
+    	   http.authorizeRequests()
+    	   .antMatchers("/passwordReset*","/image/**","/resources/**").permitAll()
+    	   .anyRequest().authenticated().and()
     	   //.antMatchers("/**/*.html").denyAll()
     	     // .and()
     	      // some more method calls
     	      .formLogin()
-                .successHandler(new SavedRequestAwareAuthenticationSuccessHandler() {
+    	      .loginPage("/login").permitAll()
+              .successHandler(new SavedRequestAwareAuthenticationSuccessHandler() {
  
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -45,7 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                    	
 	                    	super.onAuthenticationSuccess(request,response, authentication);
                     	}
-                });
+                })
+              .and()
+              .logout()                                    
+              .permitAll().and()
+              .csrf().disable();
     }
  
 }

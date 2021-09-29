@@ -9,5 +9,5 @@ public class HandmanServApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HandmanServApplication.class, args);
 	}
-
+	
 }

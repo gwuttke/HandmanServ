@@ -16,12 +16,19 @@ public class StartseiteController {
 	private StartseiteService startseiteService;
 	
 	
-	@GetMapping(name = "/")
+	@GetMapping(value = "/")
 	public String startseite(Model model, Principal principal) {
 
 		model.addAttribute("model",startseiteService.getStartseite(principal));
 		
 		return "startseite";
+		
+	}
+	
+	@GetMapping(value = "/passwordReset")
+	public String passwortReset() {
+		
+		return "passwordReset";
 		
 	}
 }
