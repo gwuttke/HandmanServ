@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+   		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body class="" style="background-color: rgba(27, 30, 31, 1.00)">
+	
+	<!-- Main container -->
+	<div class="container-xl bg-image d-flex overflow-auto " style="background-image: url('https://images.unsplash.com/photo-1626033190220-9b6aa500d49e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80'); height: 100vh; ">
+	
+	<!-- Main row -->
+	<div class="d-flex row h-100">
+	
+	<!-- Top navbar -->
+	<div class="col-12 align-self-start mt-3">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
+		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
+	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
+	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  	</button>
+	
+		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
+		      </li>
+		     <!-- Dropdown menu 
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Dropdown
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">Action</a>
+		          <a class="dropdown-item" href="#">Another action</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li> -->
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#">&Uuml;ber uns</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#"></a>
+		      </li>
+		    </ul>
+		      
+		  	<button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Abmelden</button>
+		  </div>
+	  
+		</nav>
+	</div>
+	
+	<!-- form -->
+	<div class="col-12 px-4 py-5" id="custom-cards">
+		<h2 class="pb-2 border-bottom text-white">&Uuml;ber uns</h2>
+		     	  
+   	
+		<div class="row">
+			<div class="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 col-lg-8">
+		      <!--<form class="row g-3 rounded" style="background-color: rgba(27, 30, 31, 1.00)">-->
+		      
+		      <div class="row">
+		      	<img th:src="@{/image/logo_ohne_schrift.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
+		      </div>
+		      <div class="row col-md-12 align-items-center">
+		      	<h2 class="pb-2 text-white text-center">H&ouml;fische Beamten Versicherung</h2>
+		      </div>
+		      
+		      <!-- Firmen Anschrift -->
+		      <div class="row">
+			      <form class="row g-3 mt-5 rounded">
+			      <div class="row">
+			      	<label for="staticFirmaAdresse" class="col-form-label text-white col-md-3">Adresse</label>
+					<div class="col-md-6">
+						<input type="text" readonly class="form-control-plaintext text-white" id="staticFirmaAdresse" value="H&ouml;fische Beamten Versicherung">
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+					<div class="col-md-6">
+						<input type="text" readonly class="form-control-plaintext text-white" id="staticFirmaAdresse2" value="Luidpoldplatz 86">
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+					<div class="col-md-6">
+						<input type="text" readonly class="form-control-plaintext text-white" id="staticFirmaAdresse3" value="82319 Starnberg">
+					</div>
+			      </div>
+			      <div class="row">
+			      	<label for="staticTelefon" class="col-form-label text-white col-md-3">Telefon</label>
+					<div class="col-md-6">
+						<input type="text" readonly class="form-control-plaintext text-white" id="staticTelefon" value="+49 30 47478393">
+					</div>
+			      </div>
+			      <div class="row">
+			      	<label for="staticTelefon" class="col-form-label text-white col-md-3">Email</label>
+					<div class="col-md-6">
+						<input type="text" readonly class="form-control-plaintext text-white" id="staticTelefon" value="kundensupport@hoefischebv.by">
+					</div>
+			      </div>
+			      
+			      <!-- Google Maps -->
+				  <div class="mapouter">
+				  	<div class="gmap_canvas">
+				  		<iframe width="500" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=starnberg&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br>
+				  		<style>.mapouter{position:relative;text-align:right;height:400px;width:500px;}</style>
+				  		<style>.gmap_canvas {overflow:hidden;background:none!important;height:400px;width:500px;}</style>
+				  	</div>
+				  </div>
+			  </div>
+				
+		      </div>
+		  </div>
+	</div>
+	
+	<!-- Footer -->
+	<div class="align-self-end mb-2 justify-content-around">
+		<footer class="bg-dark bg-gradient text-center text-secondary text-lg-start rounded">
+		  <div class="p-3 d-flex justify-content-around">
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Datenschutz und Cookies</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Hilfe</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Impressum</a>
+			    &copy; 2021 H&ouml;fische Beamten Versicherung
+		  </div>
+		</footer>	
+	</div>
+	
+	
+  	</div>
+	</div>
+	</body>
+</html>
