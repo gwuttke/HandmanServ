@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+   		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body class="" style="background-color: rgba(27, 30, 31, 1.00)">
+	
+	<!-- Main container -->
+	<div class="container-xl bg-image d-flex overflow-auto " style="background-image: url('https://images.unsplash.com/photo-1626033190220-9b6aa500d49e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80'); height: 100vh; ">
+	
+	<!-- Main row -->
+	<div class="d-flex row h-100">
+	
+	<!-- Top navbar -->
+	<div class="col-12 align-self-start mt-3">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
+		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
+	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
+	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  	</button>
+	
+		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
+		      </li>
+		     <!-- Dropdown menu 
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Dropdown
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">Action</a>
+		          <a class="dropdown-item" href="#">Another action</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li> -->
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#">&Uuml;ber uns</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#"></a>
+		      </li>
+		    </ul>
+		      
+		  	<button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Abmelden</button>
+		  </div>
+	  
+		</nav>
+	</div>
+	
+	<!-- Tabelle -->
+	<!-- Link zur mehr Infos: https://datatables.net/examples/styling/bootstrap5.html -->
+	
+	<div class="col-12 px-4 py-5" id="custom-cards">
+		<h2 class="pb-2 border-bottom text-white">Offene Auftr&auml;ge</h2>
+		 
+		<div class="dataTables_wrapper dt-bootstrap5 text-white mt-5">	
+	   		<!-- Tabelle -->
+			<div class="row">
+				<div class="col-sm-12"> 
+					<table id="example" class="display table table-striped text-white bg-black bg-gradient rounded table-hover" style="width:100%">
+				        <thead>
+				            <tr>
+				                <th>Nr</th>
+				                <th>Status</th>
+				                <th>Kontakt</th>
+				                <th>Betreff</th>
+				                <th>Datum</th>
+				                <th>Bearbeiter</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr class="text-white">
+				                <td>4</td>
+				                <td>Offen</td>
+				                <td>Hans Zimmer</td>
+				                <td>Nasse Wand</td>
+				                <td>01.01.2020</td>
+				                <td>Franz Meier</td>
+				            </tr>
+				            <tr class="text-white">
+				                <td>5</td>
+				                <td>Abgeschlossen</td>
+				                <td>Jan Mueller</td>
+				                <td>Auto Unfall</td>
+				                <td>01.06.2021</td>
+				                <td>Hans Schwarz</td>
+				            </tr>
+				        </tbody>
+				        <tfoot>
+				            <tr>
+				                <th>Nr</th>
+				                <th>Status</th>
+				                <th>Kontakt</th>
+				                <th>Betreff</th>
+				                <th>Datum</th>
+				                <th>Bearbeiter</th>
+				            </tr>
+				        </tfoot>
+			    	</table>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+
+	<!-- Hover effekt Zeile -->
+	<style>
+		table.dataTable.hover tbody tr:hover,
+		table.dataTable.display tbody tr:hover {background-color: rgba(13, 110, 253, 1.00); cursor: pointer}
+	</style>
+	
+	<!-- Klick effekt auf Zeile und deutsch Sprache Tabelle -->
+	<script>
+	$(document).ready(function() {
+	    $('#example').DataTable({
+		language: {
+			search: "Suche",
+			info: "Anzeige _START_ bis _END_ von _TOTAL_ Eintr&auml;ge",
+			lengthMenu: "Anzeige _MENU_ Eintr&auml;ge",
+			paginate: {
+            first:      "Erstes",
+            previous:   "Vorherige",
+            next:       "N&auml;chstes",
+            last:       "Zur&uuml;ck"
+        },}});
+        var table = $('#example').DataTable();
+        $('#example tbody').on('click', 'tr', function () {
+        var data = table.row( this ).data();
+        alert( 'You clicked on '+data[0]+'\'s row' );
+    	});
+	});
+	</script>
+	
+	<!-- Footer -->
+	<div class="align-self-end mb-2 justify-content-around">
+		<footer class="bg-dark bg-gradient text-center text-secondary text-lg-start rounded">
+		  <div class="p-3 d-flex justify-content-around">
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Datenschutz und Cookies</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Hilfe</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Impressum</a>
+			    &copy; 2021 H&ouml;fische Beamten Versicherung
+		  </div>
+		</footer>	
+	</div>
+	
+	
+  	</div>
+	</div>
+	</body>
+</html>
