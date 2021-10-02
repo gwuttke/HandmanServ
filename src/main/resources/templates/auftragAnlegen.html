@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+   		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body class="" style="background-color: rgba(27, 30, 31, 1.00)">
+	
+	<!-- Main container -->
+	<div class="container-xl bg-image d-flex overflow-auto" style="background-image: url('https://images.unsplash.com/photo-1626033190220-9b6aa500d49e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80'); height: 100vh; ">
+	
+	<!-- Main row -->
+	<div class="d-flex row h-100 ">
+	
+	<!-- Top navbar -->
+	<div class="col-12 align-self-start mt-3">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
+		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
+	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
+	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  	</button>
+	
+		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
+		      </li>
+		     <!-- Dropdown menu 
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Dropdown
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">Action</a>
+		          <a class="dropdown-item" href="#">Another action</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li> -->
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#">&Uuml;ber uns</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#"></a>
+		      </li>
+		    </ul>
+		      
+		  	<button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Abmelden</button>
+		  </div>
+	  
+		</nav>
+	</div>
+	
+	<!-- form -->
+	<div class="col-12 px-4 py-5" id="custom-cards">
+		<h2 class="pb-2 border-bottom text-white">Auftrag anlegen</h2>
+		     	  
+   	
+		<div class="row">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 col-lg-8">
+		      <!--<form class="row g-3 rounded" style="background-color: rgba(27, 30, 31, 1.00)">-->
+		      <form class="row g-3 rounded">
+				  
+				  <!-- Haupt Überschrift -->
+				  <h5 class="pb-2 text-white">Kundeninformation</h3>
+				  
+				  <!-- Auswahl Kunde, falls Auftrag nicht von Kunde angelegt wird -->
+				  <div class="col-md-12 row d-flex" id="kunde">
+					   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+						  <div class="row col-md-6">
+							<div class="row d-flex">
+								<label for="inputStandort" class="form-label text-white align-items-start">Police Nummer</label>
+								<select id="inputStandort" class="selectpicker col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
+									  <option>PoliceNummer1</option>
+									  <option>PoliceNummer1</option>
+							    </select>
+					  		</div>
+						  </div>
+						  <div class="col-md-6">
+						  </div>
+					  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+					  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>				  
+					  
+			      	  <div class="row align-item-center">
+					    <label for="staticFullName" class="col-form-label text-white col-md-3">Name</label>
+					    <div class="col-md-6">
+					    	<input type="text" readonly class="form-control-plaintext text-white" id="staticFullName" value="Herr Hans Meier">
+					    </div>
+					  </div>
+					  <div class="row align-item-center">
+					    <label for="staticEmail" class="col-form-label text-white col-md-3">E-Mail</label>
+					  	<div class="col-md-6">
+					    	<input type="text" readonlye class="form-control-plaintext text-white col-md-6" id="staticEmail" value="Hans.Meier@gmx.de">
+					  	</div>					  
+					  </div>
+				  </div>
+				  
+				  <!-- Unfallort -->
+				  <h5 class=" text-white mt-5">Unfallort</h3>
+				  <div class="col-md-10">
+				    <label for="inputLokation" class="form-label text-white">Lokation (optional)</label>
+				    <input type="text" class="form-control" id="inputLokation" placeholder="Wohnzimmer">
+				  </div>
+				  <div class="form-check form-switch">
+				  	<input class="form-check-input" style="background-color: rgba(27, 30, 31, 1.00);" type="checkbox" id="flexSwitchCheckChecked" checked>
+				  	<label class="form-check-label text-white" for="flexSwitchCheckChecked">Adresse verwenden</label>
+				  </div>
+			      <div class="col-md-10">
+				    <label for="inputStrasse" class="form-label text-white">Stra&szlig;e</label>
+				    <input type="text" class="form-control" id="inputStrasse" placeholder="Tannenweg">
+				  </div>
+				  <div class="col-md-2">
+				    <label for="inputHausnummer" class="form-label text-white">Nummer</label>
+				    <input type="text" class="form-control" id="inputHausnummer" placeholder="26">
+				  </div>
+				  <div class="col-md-2">
+				    <label for="inputPlz" class="form-label text-white">Postleitzahl</label>
+				    <input type="text" class="form-control" id="inputPlz" placeholder="10318">
+				  </div>
+				  <div class="col-md-6">
+				    <label for="inputOrt" class="form-label text-white">Ort</label>
+				    <input type="text" class="form-control" id="inputOrt" placeholder="Berlin">
+				  </div>
+				  <div class="col-md-4 ">
+				    <label for="inputLand" class="form-label text-white">Land</label>
+				    <select id="inputLand" class="form-select" disabled>
+				      <option selected>Deutschland</option>
+				      <option>...</option>
+				    </select>
+				  </div>
+				 
+				 <!-- Unfallgeschehen -->
+				 <h5 class=" text-white mt-5">Unfallhergang</h3>
+				 <div class="col-md-12">
+				    <label for="inputThema" class="form-label text-white">Betreff</label>
+				    <input type="text" class="form-control" id="inputThema" placeholder="Besch&auml;digung">
+				 </div>
+				 <div class="col-md-12">
+				    <label for="inputBeschreibung" class="form-label text-white">Beschreibung</label>
+				    <textarea class="form-control" id="inputBeschreibung" rows="10" placeholder="..."></textarea>
+				  </div>
+				  <div class="col-md-12">
+					<label for="formFile" class="form-label text-white">Datei ausw&auml;hlen</label>
+				    <input class="form-control" type="file" id="formFile">
+				  </div>
+
+				  <div class="col-12 mt-5">
+				    <button type="submit" class="btn btn-primary">Anlegen</button>
+				  </div>
+				</form>
+		    </div>
+
+		</div>
+	</div>
+	
+	
+	<!-- Footer -->
+	<div class="align-self-end mb-2 justify-content-around">
+		<footer class="bg-dark bg-gradient text-center text-secondary text-lg-start rounded">
+		  <div class="p-3 d-flex justify-content-around">
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Datenschutz und Cookies</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Hilfe</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Impressum</a>
+			    &copy; 2021 H&ouml;fische Beamten Versicherung
+		  </div>
+		</footer>	
+	</div>
+	
+	
+  	</div>
+	</div>
+	</body>
+</html>
