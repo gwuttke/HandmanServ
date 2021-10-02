@@ -24,6 +24,13 @@
                 <div th:if="${param.logout}" class="alert alert-success"> 
                     Sie sind nun Abgemeldet.
                 </div>
+                <div th:if="${param.sendPasswortChange}" class="alert alert-success"> 
+                    Es wird Ihnen eine e-Mail zugesendet mit Anweisungen zum Passwort Wechsel.
+                </div>
+                <div th:if="${param.passwortChange}" class="alert alert-success"> 
+                    Sie haben erfolgreich Ihr Passwort gewechselt
+                </div>
+                
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Benutzername" required autofocus>
                 <label for="username">Benutzername</label>

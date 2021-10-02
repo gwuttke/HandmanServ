@@ -1,5 +1,6 @@
 package de.gtwsp21.handmanserv.domain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +20,12 @@ import javax.persistence.Transient;
 @Inheritance(
     strategy = InheritanceType.JOINED
 )
-public abstract class Benutzer {
+public abstract class Benutzer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4551508668978194141L;
+	
 	@Transient
 	private final String ROLE_PREFIX="ROLE_";
 	@Transient

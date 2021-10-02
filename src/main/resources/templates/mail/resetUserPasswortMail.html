@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<headth:include="fragments/head :: headFragment (pageTitle='')"></head>
+<head th:include="fragments/head :: headFragment (pageTitle='')"></head>
 <body>
     Guten Tag <span th:text="|${benutzer.anrede} ${benutzer.nachname}|"></span>,
    </br>
-   Sie haben vor Ihr Passwort bei uns zu erneuern.
+   Bitte bestätigen Sie bis sp&auml;terstens <span th:text="${ablauf}" /> ihren wunsch zum Passwort zur&uuml;cksetzen mit diesem <a th:with="linkUrl=|${baseUrl}/passwordReset|"
+   th:href="@{${linkUrl}(token=${token})}">Link</a> um Ihrem Konto ein neues Passwort zu hinterlegen, damit Sie unsere Leistungen wieder genie&szlig;en k&ouml;nnen.
    </br>
-   Bitte geben Sie bis sp&auml;terstens ${ablauf} ihr neues Passwort unter diesem <a th:href="@{/user/resetPasswort(token=${token})}">Link</a> ein, um Ihrem Konto ein neues Passwort zu hinterlegen, damit Sie unsere Leistungen genießen können.
    </br>
-   </br>
-   Mit freundlichen Grüßen
+   Mit freundlichen Gr&uuml;ßen
    </br>
    Ihr HandmanServ-Team
 </body>

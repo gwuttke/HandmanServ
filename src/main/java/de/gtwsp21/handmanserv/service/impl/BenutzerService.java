@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,14 @@ public class BenutzerService implements IBenutzerService {
 
     @Override
 	public PasswortToken createVerificationTokenForUser(Benutzer user) {
-    	return createVerificationTokenForUser(user, UUID.randomUUID()
-	            .toString());
+    	PasswortToken pt = passwortTokenRepository.findByBenutzer(user);
+    	if(pt ==null) {
+    		pt = createVerificationTokenForUser(user, UUID.randomUUID()
+    	            .toString());
+    	}else {
+    		pt = generateNewPasswortToken(pt.getToken());
+    	}
+    	return pt;
     }
     
 	@Override
@@ -70,6 +77,27 @@ public class BenutzerService implements IBenutzerService {
 	@Override
 	public PasswortToken getVerificationToken(String token) {
 		return passwortTokenRepository.findByToken(token);
+	}
+	@Override
+	public void sendNewPasswortToken(String token, String eMail) {
+		Benutzer b = null;
+		PasswortToken ptoken= null;
+		if(StringUtils.isNotBlank(token)) {
+			b = this.getUserByPasswordToken(token).orElse(null);
+			if(b!=null) {
+				ptoken = this.generateNewPasswortToken(token);
+			}
+		}else if(StringUtils.isNotBlank(eMail)) {
+			b = this.findUserByEmail(eMail);
+			ptoken = createVerificationTokenForUser(b);
+		}else {
+			throw new IllegalArgumentException("Bitte entweder den token oder eine e-Mail angeben!");
+		}
+		
+		if(ptoken != null) {
+			mailService.sendResetTokenEmail(ptoken);
+		}
+		
 	}
 
 	@Override

@@ -8,11 +8,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "PasswortToken")
+@Table(name = "PasswortToken",uniqueConstraints=
+@UniqueConstraint(columnNames={"token"}))
+
 public class PasswortToken {
 	
 	private static final int ABLAUFZEITRAUM = 60 * 24;
@@ -20,10 +24,11 @@ public class PasswortToken {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-		
+	
 	private String token;
 	
 	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "email",referencedColumnName = "eMailadresse", unique = true)
 	private Benutzer benutzer;
 	
 	private LocalDateTime ablaufdatum;

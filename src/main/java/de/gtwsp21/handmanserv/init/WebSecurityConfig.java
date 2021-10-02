@@ -29,11 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	   http.authorizeRequests()
-    	   .antMatchers("/passwordReset*","/image/**","/resources/**").permitAll()
+    	   .antMatchers("/passwordReset*","/user/passwordReset*","/image/**","/resources/**","/login*").permitAll()
     	   .anyRequest().authenticated().and()
-    	   //.antMatchers("/**/*.html").denyAll()
-    	     // .and()
-    	      // some more method calls
     	      .formLogin()
     	      .loginPage("/login").permitAll()
               .successHandler(new SavedRequestAwareAuthenticationSuccessHandler() {

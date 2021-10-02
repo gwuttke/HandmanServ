@@ -36,5 +36,7 @@ public interface IBenutzerService {
 
 	RegistrierenModel loadRegistration();
 
+	void sendNewPasswortToken(String token, String eMail);
+
 
 }

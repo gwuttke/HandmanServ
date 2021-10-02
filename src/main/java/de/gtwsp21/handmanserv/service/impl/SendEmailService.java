@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
 
@@ -23,6 +24,8 @@ public class SendEmailService implements ISendEmailService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	
 
 	@Override
 	public void sendResetTokenEmail(final PasswortToken token) {
@@ -43,7 +46,8 @@ public class SendEmailService implements ISendEmailService {
         context.setVariable("benutzer", token.getBenutzer());
         context.setVariable("token", token.getToken());
         context.setVariable("ablauf", token.getAblaufdatum().format(formatter));
-        String text = templateEngine.process(isForReset?"resetUserPasswortMail":"newUserPasswortMail", context);
+        context.setVariable("baseUrl", ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString());
+        String text = templateEngine.process(isForReset?"mail/resetUserPasswortMail":"mail/newUserPasswortMail", context);
        
         MimeMessagePreparator messagePreparator = mimeMessage -> {
 	        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
