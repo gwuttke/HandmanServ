@@ -16,6 +16,9 @@ public class Rolle {
 	@EmbeddedId
     private RollenId rollenId;
 
+	protected Rolle() {
+	}
+	
 	public Rolle(RollenId rollenId) {
 		super();
 		this.rollenId = rollenId;

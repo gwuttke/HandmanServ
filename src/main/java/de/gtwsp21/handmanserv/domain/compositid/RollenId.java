@@ -19,6 +19,8 @@ public class RollenId implements Serializable{
 	public String getEmail() {
 		return email;
 	}
+	
+	protected RollenId() {	}
 
 	public RollenId(String email, String berechtigung) {
 		super();
