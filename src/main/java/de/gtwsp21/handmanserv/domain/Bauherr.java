@@ -25,6 +25,14 @@ public class Bauherr extends Benutzer {
 			String telefonnummer) {
 		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
 	}
+	
+	
+
+	public Bauherr(String nachname, String vorname, String eMailadresse, String passwort, String anrede,
+			String telefonnummer, List<Gebiet> gebiete) {
+		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
+		this.gebiete = gebiete;
+	}
 
 	@ManyToMany
 	@JoinTable(name = "Gebiet_Bauherr",
@@ -32,6 +40,14 @@ public class Bauherr extends Benutzer {
     inverseJoinColumns = @JoinColumn(name = "GebietId"))
 	private List<Gebiet> gebiete;
 	
+	public List<Gebiet> getGebiete() {
+		return gebiete;
+	}
+
+	public void setGebiete(List<Gebiet> gebiete) {
+		this.gebiete = gebiete;
+	}
+
 	@Override
 	public int getRolleNr() {
 		return 2;

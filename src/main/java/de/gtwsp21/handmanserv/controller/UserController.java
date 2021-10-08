@@ -28,11 +28,11 @@ public class UserController {
 
 	
 	@GetMapping(value = "/erfassen")
-	public String erfassen(ModelMap model) {
+	public String erfassen(ModelMap model,BenutzerCommand benutzerCommand) {
 		
 		model.addAttribute("data", benutzerService.loadRegistration());
 		
-		return "userErfassen";
+		return "register";
 	}
 	
 	@GetMapping(value = "/reg")
@@ -61,19 +61,21 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/registrieren")
-	public String registrieren(@Valid @ModelAttribute("benutzer") BenutzerCommand benutzerCommand, 
+	public String registrieren(@Valid @ModelAttribute("benutzerCommand") BenutzerCommand benutzerCommand, 
 		      BindingResult result, ModelMap model) {
 				
 		if (result.hasErrors()) {
-			return "registrieren"; 
+			model.addAttribute("data", benutzerService.loadRegistration());
+			return "register"; 
 		}
 		try {	
 			benutzerService.registerNewUserAccount(benutzerCommand);
 		}catch (BenutzerExistiertSchonException e) {
-			result.rejectValue("emailadresse", "Diese e-Mail Adresse existiert bereits!");
-			return "registrieren"; 
+			model.addAttribute("data", benutzerService.loadRegistration());
+			result.rejectValue("email","", "Diese e-Mail Adresse existiert bereits!");
+			return "register"; 
 		}
-		return "login";
+		return "redirect:/user/erfassen";
 	}
 	
 }

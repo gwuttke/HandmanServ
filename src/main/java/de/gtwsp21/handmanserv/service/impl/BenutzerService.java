@@ -2,8 +2,11 @@ package de.gtwsp21.handmanserv.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.gtwsp21.handmanserv.command.BenutzerCommand;
+import de.gtwsp21.handmanserv.domain.Bauherr;
 import de.gtwsp21.handmanserv.domain.Benutzer;
+import de.gtwsp21.handmanserv.domain.Berater;
+import de.gtwsp21.handmanserv.domain.Gebiet;
+import de.gtwsp21.handmanserv.domain.Gewerk;
+import de.gtwsp21.handmanserv.domain.Handwerker;
 import de.gtwsp21.handmanserv.domain.PasswortToken;
+import de.gtwsp21.handmanserv.domain.Rolle;
+import de.gtwsp21.handmanserv.domain.compositid.RollenId;
 import de.gtwsp21.handmanserv.exception.BenutzerExistiertSchonException;
 import de.gtwsp21.handmanserv.model.RegistrierenModel;
 import de.gtwsp21.handmanserv.model.helper.BenutzerHelper;
@@ -20,6 +30,7 @@ import de.gtwsp21.handmanserv.repository.BenutzerRepository;
 import de.gtwsp21.handmanserv.repository.GebietRepository;
 import de.gtwsp21.handmanserv.repository.GewerkRepository;
 import de.gtwsp21.handmanserv.repository.PasswortTokenRepository;
+import de.gtwsp21.handmanserv.repository.RollenRepository;
 import de.gtwsp21.handmanserv.service.IBenutzerService;
 import de.gtwsp21.handmanserv.service.ISendEmailService;
 
@@ -32,6 +43,9 @@ public class BenutzerService implements IBenutzerService {
 	
 	@Autowired
 	private BenutzerRepository benutzerRepository;
+	
+	@Autowired
+	private RollenRepository rollenRepository;
 	
 	@Autowired
 	private GebietRepository gebieteRepository;
@@ -128,7 +142,9 @@ public class BenutzerService implements IBenutzerService {
 	@Override
 	public void changeBenutzerPassword(Benutzer user, String passwort) {
 		user.setPasswort(passwordEncoder.encode(passwort));
-        benutzerRepository.save(user);
+		user.setEnabled(true);
+		passwortTokenRepository.delete(passwortTokenRepository.findByBenutzer(user));
+		benutzerRepository.save(user);
 
 	}
 
@@ -166,6 +182,34 @@ public class BenutzerService implements IBenutzerService {
         return TOKEN_VALID;
     }
 	
+	private Benutzer checkAndFillBenutzerGewerkAndGebiet(Benutzer b, List<Long> gewerke, List<Long> gebiete) {
+		if(b != null && b.getId() != null && b.getId() > 0L) {
+			List<Gebiet> geb = null;
+			List<Gewerk> gew = null;
+			if(checkList(gebiete)) { 
+				geb = gebiete.stream().map(id -> gebieteRepository.findById(id).get()).collect(Collectors.toList());
+			}
+			if(checkList(gewerke)) {
+				gew = gewerke.stream().map(id -> gewerkRepository.findById(id).get()).collect(Collectors.toList());
+			}
+			if (b instanceof Handwerker) {
+				Handwerker h = (Handwerker) b;
+				h.setGewerke(gew);
+				h.setGebiete(geb);
+				benutzerRepository.save(h);
+			}else if(b instanceof Bauherr) {
+				Bauherr bau = (Bauherr) b;
+				bau.setGebiete(geb);
+				benutzerRepository.save(bau);
+			}else if (b instanceof Berater) {
+				 Berater ber = (Berater) b;
+				 ber.setGebiete(geb);
+				 benutzerRepository.save(ber);
+			}
+		}
+		return b;
+	}
+	
 	@Override
     public Benutzer registerNewUserAccount(final BenutzerCommand accountDto) throws BenutzerExistiertSchonException  {
         if (emailExists(accountDto.getEmail())) {
@@ -174,6 +218,9 @@ public class BenutzerService implements IBenutzerService {
         final Benutzer user = accountDto.toBenutzer();
 
          benutzerRepository.save(user);
+         Rolle r = new Rolle(new RollenId(user.geteMailadresse(), user.getRolleForSecurity()[0]));
+         rollenRepository.save(r);
+         checkAndFillBenutzerGewerkAndGebiet(user, accountDto.getGewerke(), accountDto.getGebiete());
          PasswortToken pt = createVerificationTokenForUser(user);
          mailService.sendInitialTokenEmail(pt);
          return user;
@@ -181,6 +228,10 @@ public class BenutzerService implements IBenutzerService {
 
 	private boolean emailExists(final String email) {
 		return benutzerRepository.findByeMailadresse(email) != null;
+	}
+	
+	private boolean checkList(List<?> l) {
+		return l != null && (!l.isEmpty() && !l.contains(0d)); 
 	}
 
 }

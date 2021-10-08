@@ -33,6 +33,14 @@ public class Berater extends Benutzer {
     inverseJoinColumns = @JoinColumn(name = "GebietId"))
 	private List<Gebiet> gebiete;
 	
+	public List<Gebiet> getGebiete() {
+		return gebiete;
+	}
+
+	public void setGebiete(List<Gebiet> gebiete) {
+		this.gebiete = gebiete;
+	}
+
 	@Override
 	public int getRolleNr() {
 		return 1;

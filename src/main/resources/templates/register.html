@@ -13,14 +13,13 @@
 	<div class="d-flex row h-100">
 	
 	<!-- Top navbar -->
-	<div class="col-12 align-self-start mt-3">
+	<div th:replace="fragments/menue :: menu" class="col-12 align-self-start mt-3">
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
 		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
 	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
 	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    	<span class="navbar-toggler-icon"></span>
 	  	</button>
-	
 		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
 		      <li class="nav-item active">
@@ -63,9 +62,9 @@
 		<div class="row">
 			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 col-lg-8">
 		      <!--<form class="row g-3 rounded" style="background-color: rgba(27, 30, 31, 1.00)">-->
-		      <form class="row g-3 rounded">
+		      <form class="row g-3 rounded" th:object="${benutzerCommand}" method="POST" th:action="@{/user/registrieren}">
 	
-				  <h3 class="kundenInfos pb-2 text-white">Anlage Kunde</h3>
+				  <h3 class="kundenInfos pb-2 text-white d-none">Anlage Kunde</h3>
 				  <h3 class="beraterInfos pb-2 text-white d-none">Anlage Berater</h3>
 				  <h3 class="bauleiterInfos pb-2 text-white d-none">Anlage Bauleiter</h3>
 				  <h3 class="handwerkerInfos pb-2 text-white d-none">Anlage Handwerker</h3>
@@ -73,33 +72,37 @@
 				  <!-- General -->
 		      	  <div class="col-md-2">
 				    <label for="inputAnrede" class="form-label text-white">Anrede</label>
-				    <select id="inputAnrede" class="form-select">
-				      <option selected></option>
+				    <select id="inputAnrede" th:field="*{anrede}" class="form-select">
+				      <option value="0" selected>Bitte ausw&auml;len</option>
+						 	<option th:each="anrede: ${data.anreden}" th:value="${anrede}" th:text="${anrede}">One</option>
 				    </select>
+				    <div class="alert alert-danger" th:if="${#fields.hasErrors('anrede')}" th:errors="*{anrede}" />
 				  </div>
 		      	  <div class="col-md-5">
 				    <label for="inputVorname" class="form-label text-white">Vorname</label>
-				    <input type="text" class="form-control" id="inputVorname" placeholder="Hans">
+				    <input type="text" th:field="*{vorname}" class="form-control" id="inputVorname" placeholder="Hans">
+				  	<div class="alert alert-danger" th:if="${#fields.hasErrors('vorname')}" th:errors="*{vorname}" />
 				  </div>
 		      	  <div class="col-md-5">
 				    <label for="inputNachname" class="form-label text-white">Nachname</label>
-				    <input type="text" class="form-control" id="inputNachname" placeholder="Meier">
+				    <input type="text" th:field="*{nachname}" class="form-control" id="inputNachname" placeholder="Meier">
+				  	<div class="alert alert-danger" th:if="${#fields.hasErrors('nachname')}" th:errors="*{nachname}" />
 				  </div>
 				  <div class="col-md-6">
 				    <label for="inputEmail" class="form-label text-white">E-Mail</label>
-				    <input type="email" class="form-control" id="inputEmail" placeholder="Hans.Meier@gmx.de">
+				    <input type="email" class="form-control" th:field="*{email}" id="inputEmail" placeholder="Hans.Meier@gmx.de">
+				    <div class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
 				  </div>
 				 
 				  
 				   <!-- Rollenwechsel -->
 		      	  <div class="col-md-6">
 				    <label for="inputRolle" class="form-label text-white">Rolle</label>
-				    <select id="inputRolle" onchange="func(this)" class="form-select">
-				      <option selected value="1">Kunde</option>
-				      <option value="2">Berater</option>
-				      <option value="3">Bauleiter</option>
-				      <option value="4">Handwerker</option>
+				    <select name="rolle" id="inputRolle" onchange="func(this)" class="form-select">
+				    	<option value="0" selected>Bitte ausw&auml;len</option>
+						 <option th:each="btyp: ${data.benutzertyp}" th:value="${btyp.getLeft()}" th:text="${btyp.getRight()}">One</option>
 				    </select>
+				    <div class="alert alert-danger" th:if="${#fields.hasErrors('rolle')}" th:errors="*{rolle}" />
 				  </div>
 				  <div class="col-md-6"> 
 				  </div>
@@ -109,28 +112,32 @@
 				  <script>
 				    function func(id)
 					{
-						if(id.value == 1){
-				    	$(".kundenInfos").removeClass("d-none");
-				    	$(".bauleiterInfos").addClass("d-none");
-				    	$(".beraterInfos").addClass("d-none");
-				    	$(".handwerkerInfos").addClass("d-none");}
+						if(id.value == 3){
+					    	$(".kundenInfos").removeClass("d-none");
+					    	$(".bauleiterInfos").addClass("d-none");
+					    	$(".beraterInfos").addClass("d-none");
+					    	$(".handwerkerInfos").addClass("d-none");}
+				    	else if (id.value == 1){
+							$(".beraterInfos").removeClass("d-none");
+							$(".bauleiterInfos").addClass("d-none");
+					    	$(".kundenInfos").addClass("d-none");
+					    	$(".handwerkerInfos").addClass("d-none");}
 				    	else if (id.value == 2){
-						$(".beraterInfos").removeClass("d-none");
-						$(".bauleiterInfos").addClass("d-none");
-				    	$(".kundenInfos").addClass("d-none");
-				    	$(".handwerkerInfos").addClass("d-none");}
-				    	else if (id.value == 3){
-						$(".bauleiterInfos").removeClass("d-none");
-						$(".beraterInfos").addClass("d-none");
-				    	$(".kundenInfos").addClass("d-none");
-				    	$(".handwerkerInfos").addClass("d-none");}
+							$(".bauleiterInfos").removeClass("d-none");
+							$(".beraterInfos").addClass("d-none");
+					    	$(".kundenInfos").addClass("d-none");
+					    	$(".handwerkerInfos").addClass("d-none");}
 				    	else if (id.value == 4){
-						$(".handwerkerInfos").removeClass("d-none")
-						$(".bauleiterInfos").addClass("d-none");
-						$(".beraterInfos").addClass("d-none");
-				    	$(".kundenInfos").addClass("d-none");}
-						else{}
-			
+							$(".handwerkerInfos").removeClass("d-none")
+							$(".bauleiterInfos").addClass("d-none");
+							$(".beraterInfos").addClass("d-none");
+					    	$(".kundenInfos").addClass("d-none");}
+						else{
+							$(".handwerkerInfos:not([class*='d-none'])").addClass("d-none");
+							$(".bauleiterInfos:not([class*='d-none'])").addClass("d-none");
+							$(".beraterInfos:not([class*='d-none'])").addClass("d-none");
+							$(".kundenInfos:not([class*='d-none'])").addClass("d-none");
+						}
 					}
 				  </script>
 				  
@@ -141,23 +148,35 @@
 					  <div class="col-md-6">
 						  <div class="row d-flex">
 						  	<label for="inputBereich" class="form-label text-white align-items-start">Zust&auml;ndigkeitsbereich</label>
-						  	<select id="inputBereich" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
-							      <option>test</option>
-							      <option>test2</option>
+						  	<select id="inputBereich" name="gebiete" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
+							    <option value="0" selected>Bitte ausw&auml;len</option>
+						 		<option th:each="gebiet: ${data.gebiete}" th:value="${gebiet.id}" th:text="${gebiet.name}">One</option>
 					    	</select>
 						  </div>
 					  </div>
 				  </div>	
 				  
+				   <!-- Handwerker -->
+				  <div class="handwerkerInfos col-md-12 d-none" id="handwerkerInfos">
+					  <div class="col-md-6">
+						<div class="row d-flex">
+							<label for="inputGewerk" class="form-label text-white align-items-start">Gewerke</label>
+							<select id="inputGewerk" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
+								<option value="0" selected>Bitte ausw&auml;len</option>
+						 		<option th:each="gewerk: ${data.gewerke}" th:value="${gewerk.id}" th:text="${gewerk.name}">One</option>
+						    </select>
+				  		</div>
+					  </div>
+				  </div>
 
 				  <!-- Berater -->
 				  <div class="beraterInfos col-md-12 d-none" id="beraterInfos">
 					  <div class="col-md-6">
 						<div class="row d-flex">
-							<label for="inputStandort" class="form-label text-white align-items-start">Unternehmensstandort</label>
-							<select id="inputStandort" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
-								  <option>test</option>
-								  <option>test2</option>
+							<label for="inputGebiete" class="form-label text-white align-items-start">Unternehmensstandort</label>
+							<select id="inputGebiete" class="selectpicker align-items-end col-md-12" data-live-search="true" multiple title="Ausw&auml;hlen...">
+								<option value="0" selected>Bitte ausw&auml;len</option>
+						 		<option th:each="gebiet: ${data.gebiete}" th:value="${gebiet.id}" th:text="${gebiet.name}">One</option>
 						    </select>
 				  		</div>
 					  </div>
@@ -167,32 +186,36 @@
 				  
 				  <!-- Kunde -->
 				  <div class="col-md-12">
-					  <div class="kundenInfos row" id="kundenInfos">
+					  <div class="kundenInfos row d-none" id="kundenInfos">
 						  <div class="col-md-6">
 						    <label for="inputPolice" class="form-label text-white">Police Nummer</label>
-						    <input type="text" class="form-control" id="inputPolice" placeholder="542974">
+						    <input type="text" class="form-control" th:field="*{police}" id="inputPolice" placeholder="542974">
+						  </div>
+						  <div class="col-md-6">
+						    <label for="inputTel" th:field="*{telefonnummer}" class="form-label text-white">Telefonnummer</label>
+						    <input type="text" class="form-control" th:field="*{telefonnummer}" id="inputtelefonnummer" placeholder="089756957">
 						  </div>
 						  <div class="col-md-10">
 						    <label for="inputStrasse" class="form-label text-white">Stra&szlig;e</label>
-						    <input type="text" class="form-control" id="inputStrasse" placeholder="Tannenweg">
+						    <input type="text" class="form-control" th:field="*{strasse}" id="inputStrasse" placeholder="Tannenweg">
 						  </div>
 						  <div class="col-md-2">
 						    <label for="inputHausnummer" class="form-label text-white">Nummer</label>
-						    <input type="text" class="form-control" id="inputHausnummer" placeholder="26">
+						    <input type="text" class="form-control" th:field="*{nummer}" id="inputHausnummer" placeholder="26">
 						  </div>
 						  <div class="col-md-2">
 						    <label for="inputPlz" class="form-label text-white">Postleitzahl</label>
-						    <input type="text" class="form-control" id="inputPlz" placeholder="10318">
+						    <input type="text" class="form-control" th:field="*{plz}" id="inputPlz" placeholder="10318">
 						  </div>
 						  <div class="col-md-6">
 						    <label for="inputOrt" class="form-label text-white">Ort</label>
-						    <input type="text" class="form-control" id="inputOrt" placeholder="Berlin">
+						    <input type="text" class="form-control" th:field="*{ort}" id="inputOrt" placeholder="Berlin">
 						  </div>
 						  <div class="col-md-4 ">
 						    <label for="inputLand" class="form-label text-white">Land</label>
-						    <select id="inputLand" class="form-select" disabled>
-						      <option selected>Deutschland</option>
-						      <option>...</option>
+						    <select id="inputLand" class="form-select" th:field="*{land}" disabled>
+						      <option value="Deutschland" selected>Deutschland</option>
+						      <option value="">...</option>
 						    </select>
 						  </div>
 					  </div>
@@ -210,17 +233,7 @@
 	</div>
 	
 	
-	<!-- Footer -->
-	<div class="align-self-end mb-2 justify-content-around">
-		<footer class="bg-dark bg-gradient text-center text-secondary text-lg-start rounded">
-		  <div class="p-3 d-flex justify-content-around">
-			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Datenschutz und Cookies</a>
-			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Hilfe</a>
-			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Impressum</a>
-			    &copy; 2021 H&ouml;fische Beamten Versicherung
-		  </div>
-		</footer>	
-	</div>
+	<div th:replace="fragments/footer :: footer"/>
 	
 	
   	</div>

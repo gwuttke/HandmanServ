@@ -1,0 +1,42 @@
+<!-- Top navbar -->
+	<div class="col-12 align-self-start mt-3" th:fragment="menu">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
+		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
+	  	<a class="d-none d-sm-flex navbar-brand text-white p-3" th:href="@{/}" >H&ouml;fische Beamten Versicherung</a>
+	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  	</button>
+	
+		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
+		      </li>
+		      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ITMitarbeiter','ROLE_BERATER')">
+		        <a class="nav-link text-white" th:href="@{/user/erfassen}" href="#">Benutzer regstrieren</a>
+		      </li>
+		     <!-- Dropdown menu 
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Dropdown
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">Action</a>
+		          <a class="dropdown-item" href="#">Another action</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li> -->
+		      <li class="nav-item">
+		        <a class="nav-link text-white" th:href="@{/ueberUns}" href="#">&Uuml;ber uns</a>
+		      </li>
+		    </ul>
+		      
+		  	<a class="btn btn-outline-success my-2 my-sm-0 " th:href="@{/login?logout}">Abmelden</a>
+		  </div>
+	  
+		</nav>
+	</div>

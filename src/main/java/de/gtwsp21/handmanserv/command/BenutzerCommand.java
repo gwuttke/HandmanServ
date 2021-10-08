@@ -11,8 +11,6 @@ import de.gtwsp21.handmanserv.domain.BackofficeMitarbeiter;
 import de.gtwsp21.handmanserv.domain.Bauherr;
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.domain.Berater;
-import de.gtwsp21.handmanserv.domain.Gebiet;
-import de.gtwsp21.handmanserv.domain.Gewerk;
 import de.gtwsp21.handmanserv.domain.Handwerker;
 import de.gtwsp21.handmanserv.domain.ITMitarbeiter;
 import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
@@ -24,8 +22,6 @@ public class BenutzerCommand {
     @Size(min = 1, message = "Bitte wählen Sie eine Anrede")
 	private String anrede;
 	
-	@NotNull
-    @Size(min = 1, message = "Bitte geben Sie eine Telefonnummer an")
 	private String telefonnummer;
 	
 	@NotNull
@@ -46,9 +42,69 @@ public class BenutzerCommand {
     @Max(value = 6, message =  "Bitte geben Sie einen korrekten Benutzertyp an")
     private int rolle;
     
-    private List<Gebiet> gebiete;
+    private List<Long> gebiete;
     
-    private List<Gewerk> gewerke;
+    private List<Long> gewerke;
+    
+    private String police;
+    
+    private String strasse;
+    
+    private String nummer;
+    
+    private String plz;
+    
+    private String ort;
+    
+    private String land;
+
+	public String getPolice() {
+		return police;
+	}
+
+	public void setPolice(String police) {
+		this.police = police;
+	}
+
+	public String getStrasse() {
+		return strasse;
+	}
+
+	public void setStrasse(String strasse) {
+		this.strasse = strasse;
+	}
+
+	public String getNummer() {
+		return nummer;
+	}
+
+	public void setNummer(String nummer) {
+		this.nummer = nummer;
+	}
+
+	public String getPlz() {
+		return plz;
+	}
+
+	public void setPlz(String plz) {
+		this.plz = plz;
+	}
+
+	public String getOrt() {
+		return ort;
+	}
+
+	public void setOrt(String ort) {
+		this.ort = ort;
+	}
+
+	public String getLand() {
+		return land;
+	}
+
+	public void setLand(String land) {
+		this.land = land;
+	}
 
 	public int getRolle() {
 		return rolle;
@@ -58,21 +114,6 @@ public class BenutzerCommand {
 		this.rolle = rolle;
 	}
 
-	public List<Gebiet> getGebiete() {
-		return gebiete;
-	}
-
-	public void setGebiete(List<Gebiet> gebiete) {
-		this.gebiete = gebiete;
-	}
-
-	public List<Gewerk> getGewerke() {
-		return gewerke;
-	}
-
-	public void setGewerke(List<Gewerk> gewerke) {
-		this.gewerke = gewerke;
-	}
 
 	public String getAnrede() {
 		return anrede;
@@ -106,6 +147,22 @@ public class BenutzerCommand {
 		this.nachname = nachname;
 	}
 
+	public List<Long> getGebiete() {
+		return gebiete;
+	}
+
+	public void setGebiete(List<Long> gebiete) {
+		this.gebiete = gebiete;
+	}
+
+	public List<Long> getGewerke() {
+		return gewerke;
+	}
+
+	public void setGewerke(List<Long> gewerke) {
+		this.gewerke = gewerke;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -117,13 +174,13 @@ public class BenutzerCommand {
     public Benutzer toBenutzer(){
     	switch (rolle) {
 		case 1:
-			return new Berater(nachname, vorname, email, null, anrede, telefonnummer, gebiete);
+			return new Berater(nachname, vorname, email, null, anrede, telefonnummer, null);
 		case 2:
-			return new Bauherr(nachname,vorname,email,null,anrede,telefonnummer);
+			return new Bauherr(nachname,vorname,email,null,anrede,telefonnummer,null);
 		case 3:
 			return new Versicherungsnehmer(nachname, vorname, email, null, anrede, telefonnummer);
 		case 4:
-			return new Handwerker(nachname, vorname, email, null, anrede, telefonnummer, gebiete, gewerke);
+			return new Handwerker(nachname, vorname, email, null, anrede, telefonnummer, null, null);
 		case 5:
 			return new BackofficeMitarbeiter(nachname, vorname, email, null, anrede, telefonnummer);
 		case 6:
