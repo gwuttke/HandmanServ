@@ -16,12 +16,22 @@ public enum Auftragstatus {
 	}
 	
 	
-	public Auftragstatus findByNummer(int nummer) {
+	public int getNummer() {
+		return nummer;
+	}
+
+
+	public String getText() {
+		return text;
+	}
+
+
+	public static Auftragstatus findByNummer(int nummer) throws NoSuchElementException{
 		return Stream.of(Auftragstatus.values()).filter(status -> status.nummer == nummer).findFirst()
 		.orElseThrow(()-> new NoSuchElementException(String.format("Für die Nummer: %s gibt es keinen Auftragsstatus!",nummer)));
 	}
 	
-	public Auftragstatus findByText(String text) {
+	public static Auftragstatus findByText(String text) throws NoSuchElementException {
 		return Stream.of(Auftragstatus.values()).filter(status -> status.text.equals(text)).findFirst()
 		.orElseThrow(()-> new NoSuchElementException(String.format("Für den Text: %s gibt es keinen Auftragsstatus!",text)));
 	}

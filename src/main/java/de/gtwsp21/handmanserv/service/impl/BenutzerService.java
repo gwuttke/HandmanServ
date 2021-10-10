@@ -22,6 +22,7 @@ import de.gtwsp21.handmanserv.domain.Gewerk;
 import de.gtwsp21.handmanserv.domain.Handwerker;
 import de.gtwsp21.handmanserv.domain.PasswortToken;
 import de.gtwsp21.handmanserv.domain.Rolle;
+import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
 import de.gtwsp21.handmanserv.domain.compositid.RollenId;
 import de.gtwsp21.handmanserv.exception.BenutzerExistiertSchonException;
 import de.gtwsp21.handmanserv.model.RegistrierenModel;
@@ -31,6 +32,7 @@ import de.gtwsp21.handmanserv.repository.GebietRepository;
 import de.gtwsp21.handmanserv.repository.GewerkRepository;
 import de.gtwsp21.handmanserv.repository.PasswortTokenRepository;
 import de.gtwsp21.handmanserv.repository.RollenRepository;
+import de.gtwsp21.handmanserv.repository.VersicherungsnehmerRepository;
 import de.gtwsp21.handmanserv.service.IBenutzerService;
 import de.gtwsp21.handmanserv.service.ISendEmailService;
 
@@ -64,6 +66,9 @@ public class BenutzerService implements IBenutzerService {
     
     @Autowired
     private GewerkRepository gewerkRepository;
+    
+    @Autowired
+    private VersicherungsnehmerRepository versicherungsnehmerRepository;
 
     @Override
 	public PasswortToken createVerificationTokenForUser(Benutzer user) {
@@ -232,6 +237,11 @@ public class BenutzerService implements IBenutzerService {
 	
 	private boolean checkList(List<?> l) {
 		return l != null && (!l.isEmpty() && !l.contains(0d)); 
+	}
+
+	@Override
+	public Versicherungsnehmer findVersicherungsnehmerByPolice(String police) {
+		return versicherungsnehmerRepository.findByPolicennummer(police);
 	}
 
 }

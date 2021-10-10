@@ -5,6 +5,7 @@ import java.util.Optional;
 import de.gtwsp21.handmanserv.command.BenutzerCommand;
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.domain.PasswortToken;
+import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
 import de.gtwsp21.handmanserv.exception.BenutzerExistiertSchonException;
 import de.gtwsp21.handmanserv.model.RegistrierenModel;
 
@@ -37,6 +38,6 @@ public interface IBenutzerService {
 	RegistrierenModel loadRegistration();
 
 	void sendNewPasswortToken(String token, String eMail);
-
-
+	
+	Versicherungsnehmer findVersicherungsnehmerByPolice(String police);
 }
