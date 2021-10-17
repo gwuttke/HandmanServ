@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import de.gtwsp21.handmanserv.domain.Adresse;
 import de.gtwsp21.handmanserv.domain.BackofficeMitarbeiter;
 import de.gtwsp21.handmanserv.domain.Bauherr;
 import de.gtwsp21.handmanserv.domain.Benutzer;
@@ -178,9 +179,13 @@ public class BenutzerCommand {
 		case 2:
 			return new Bauherr(nachname,vorname,email,null,anrede,telefonnummer,null);
 		case 3:
-			return new Versicherungsnehmer(nachname, vorname, email, null, anrede, telefonnummer);
+			Versicherungsnehmer v = new Versicherungsnehmer(nachname, vorname, email, null, anrede, telefonnummer);
+			Adresse a = new Adresse(null,strasse,nummer,plz,ort);
+			v.setAdresse(a);
+			v.setPolicennummer(police);
+			return v;
 		case 4:
-			return new Handwerker(nachname, vorname, email, null, anrede, telefonnummer, null, null);
+     			return new Handwerker(nachname, vorname, email, null, anrede, telefonnummer, null, null);
 		case 5:
 			return new BackofficeMitarbeiter(nachname, vorname, email, null, anrede, telefonnummer);
 		case 6:

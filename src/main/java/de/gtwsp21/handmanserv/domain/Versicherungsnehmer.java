@@ -1,5 +1,6 @@
 package de.gtwsp21.handmanserv.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -22,7 +23,7 @@ public class Versicherungsnehmer extends Benutzer {
 		super(nachname, vorname, eMailadresse, passwort, anrede, telefonnummer);
 	}
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Adresse adresse;
 	
 	private String telefonnummer;

@@ -1,5 +1,6 @@
 package de.gtwsp21.handmanserv.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import de.gtwsp21.handmanserv.command.BenutzerCommand;
@@ -40,4 +41,6 @@ public interface IBenutzerService {
 	void sendNewPasswortToken(String token, String eMail);
 	
 	Versicherungsnehmer findVersicherungsnehmerByPolice(String police);
+	
+	List<Versicherungsnehmer> findAllVersicherungsnehmer();
 }

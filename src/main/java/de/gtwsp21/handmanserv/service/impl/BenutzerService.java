@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.gtwsp21.handmanserv.command.BenutzerCommand;
+import de.gtwsp21.handmanserv.domain.Adresse;
 import de.gtwsp21.handmanserv.domain.Bauherr;
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.domain.Berater;
@@ -27,6 +28,8 @@ import de.gtwsp21.handmanserv.domain.compositid.RollenId;
 import de.gtwsp21.handmanserv.exception.BenutzerExistiertSchonException;
 import de.gtwsp21.handmanserv.model.RegistrierenModel;
 import de.gtwsp21.handmanserv.model.helper.BenutzerHelper;
+import de.gtwsp21.handmanserv.model.helper.GebietHelper;
+import de.gtwsp21.handmanserv.repository.AdresseRepository;
 import de.gtwsp21.handmanserv.repository.BenutzerRepository;
 import de.gtwsp21.handmanserv.repository.GebietRepository;
 import de.gtwsp21.handmanserv.repository.GewerkRepository;
@@ -68,7 +71,13 @@ public class BenutzerService implements IBenutzerService {
     private GewerkRepository gewerkRepository;
     
     @Autowired
+    private AdresseRepository adressenRepository;
+    
+    @Autowired
     private VersicherungsnehmerRepository versicherungsnehmerRepository;
+    
+	@Autowired
+	private GebietHelper gebietHelper;
 
     @Override
 	public PasswortToken createVerificationTokenForUser(Benutzer user) {
@@ -210,10 +219,17 @@ public class BenutzerService implements IBenutzerService {
 				 Berater ber = (Berater) b;
 				 ber.setGebiete(geb);
 				 benutzerRepository.save(ber);
+			}else if(b instanceof Versicherungsnehmer) {
+				Versicherungsnehmer v = (Versicherungsnehmer) b;
+				Adresse adresse = v.getAdresse();
+				adresse.setGebiet(gebietHelper.findGebietByPlz(adresse.getPlz()));
+				adressenRepository.save(adresse);
+				benutzerRepository.save(v);
 			}
 		}
 		return b;
 	}
+	
 	
 	@Override
     public Benutzer registerNewUserAccount(final BenutzerCommand accountDto) throws BenutzerExistiertSchonException  {
@@ -221,7 +237,11 @@ public class BenutzerService implements IBenutzerService {
             throw new BenutzerExistiertSchonException("There is an account with that email address: " + accountDto.getEmail());
         }
         final Benutzer user = accountDto.toBenutzer();
-
+        
+      /*  if(user instanceof Versicherungsnehmer) {
+        	adressenRepository.save((Versicherungsnehmer) user).getAdresse());
+        }
+*/
          benutzerRepository.save(user);
          Rolle r = new Rolle(new RollenId(user.geteMailadresse(), user.getRolleForSecurity()[0]));
          rollenRepository.save(r);
@@ -236,12 +256,17 @@ public class BenutzerService implements IBenutzerService {
 	}
 	
 	private boolean checkList(List<?> l) {
-		return l != null && (!l.isEmpty() && !l.contains(0d)); 
+		return l!=null && !l.isEmpty() && !l.contains(0l); 
 	}
 
 	@Override
 	public Versicherungsnehmer findVersicherungsnehmerByPolice(String police) {
 		return versicherungsnehmerRepository.findByPolicennummer(police);
+	}
+
+	@Override
+	public List<Versicherungsnehmer> findAllVersicherungsnehmer() {
+		return versicherungsnehmerRepository.findAll();
 	}
 
 }

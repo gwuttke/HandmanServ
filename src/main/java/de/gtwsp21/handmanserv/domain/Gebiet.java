@@ -17,6 +17,18 @@ public class Gebiet {
 	private String name;
 	
 	private String bereich;
+	
+	protected Gebiet() {
+		super();
+	}
+	
+
+	public Gebiet(String name, String bereich) {
+		this();
+		this.name = name;
+		this.bereich = bereich;
+	}
+
 
 	public Long getId() {
 		return id;

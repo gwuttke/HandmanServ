@@ -2,6 +2,7 @@ package de.gtwsp21.handmanserv.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,7 +30,7 @@ public class Handwerker extends Benutzer {
 		this.gewerke = gewerke;
 	}
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Gebiet_Handwerker",
     joinColumns = @JoinColumn(name = "HandwerkerId"),
     inverseJoinColumns = @JoinColumn(name = "GebietId"))

@@ -26,6 +26,22 @@ public class Adresse {
 	
 	private String ort;
 
+	
+	
+	protected Adresse() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Adresse(Gebiet gebiet, String strasse, String hausnummer, String plz, String ort) {
+		this();
+		this.gebiet = gebiet;
+		this.strasse = strasse;
+		this.hausnummer = hausnummer;
+		this.plz = plz;
+		this.ort = ort;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -1,23 +1,32 @@
 package de.gtwsp21.handmanserv.controller;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.gtwsp21.handmanserv.command.AuftragCommand;
 import de.gtwsp21.handmanserv.domain.Auftrag;
 import de.gtwsp21.handmanserv.domain.Auftragstatus;
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
+import de.gtwsp21.handmanserv.model.AuftragModel;
+import de.gtwsp21.handmanserv.repository.BenutzerRepository;
 import de.gtwsp21.handmanserv.service.IAuftragService;
 import de.gtwsp21.handmanserv.service.IBenutzerService;
 
@@ -49,6 +58,50 @@ public class AuftragController {
 		model.addAttribute("auftraege", listedAuftraege);
 		return "offeneAuftraege";
 	}
+	
+	@GetMapping(value = "/add")
+	public String addGet(Principal principal,AuftragModel auftragModel, AuftragCommand command,Model model) {
+		auftragModel.setStatus(Arrays.asList(Auftragstatus.Neu));
+		command.setStatus(Auftragstatus.Neu.getNummer());
+		Benutzer b = benutzerService.findUserByEmail(principal.getName());
+		if(b instanceof Versicherungsnehmer) {
+			Versicherungsnehmer versicherungsnehmer = (Versicherungsnehmer) b;
+			String policennummer = versicherungsnehmer.getPolicennummer();
+			auftragModel.setPolicen(Arrays.asList(policennummer));
+			command.setPolice(policennummer);
+			auftragModel.setVersicherungsnehmer(versicherungsnehmer);
+		}else {
+		auftragModel.setPolicen(benutzerService.findAllVersicherungsnehmer().stream()
+				.map(Versicherungsnehmer::getPolicennummer).toList());
+		}
+		model.addAttribute("command", command);
+		model.addAttribute("data",auftragModel);
+		return "auftragAnlegen";
+	}
+	
+	@PostMapping(value ="/add")
+	public String addPost(@Valid @ModelAttribute("auftragCommmand")  AuftragCommand command, Principal principal, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			return "auftragAnlegen";
+		}
+		Benutzer user = benutzerService.findUserByEmail(principal.getName());
+		command.setAngelegtVonId(user.getId());
+		Versicherungsnehmer v = null;
+		if(user instanceof Versicherungsnehmer) {
+			v = (Versicherungsnehmer) user;
+			command.setPolice(v.getPolicennummer());
+		}else {
+			v = benutzerService.findVersicherungsnehmerByPolice(command.getPolice());
+		}
+		command.setVersicherungsnehmerId(v.getId());
+	
+		auftragService.generate(command);
+		
+		
+		return "auftrag";
+		
+	}
 
 	private List<Auftrag> listFilteredAuftraege(Principal principal, int status, String police) {
 		List<Auftrag> listAllAuftraege = listAllAuftraege(principal,police);
@@ -68,6 +121,5 @@ public class AuftragController {
 		}
 		return auftragService.listAuftraege(b, v);
 	}
-	
 	
 }
