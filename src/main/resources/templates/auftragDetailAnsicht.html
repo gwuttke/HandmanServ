@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+   		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body class="" style="background-color: rgba(27, 30, 31, 1.00)">
+	
+	<!-- Main container -->
+	<div class="container-xl bg-image d-flex overflow-auto" style="background-image: url('https://images.unsplash.com/photo-1626033190220-9b6aa500d49e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80'); height: 100vh; ">
+	
+	<!-- Main row -->
+	<div class="d-flex row h-100 ">
+	
+	<!-- Top navbar -->
+	<div class="col-12 align-self-start mt-3">
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
+		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
+	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
+	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  	</button>
+	
+		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
+		      </li>
+		     <!-- Dropdown menu 
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Dropdown
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">Action</a>
+		          <a class="dropdown-item" href="#">Another action</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li> -->
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#">&Uuml;ber uns</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link disabled text-white" href="#"></a>
+		      </li>
+		    </ul>
+		      
+		  	<button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Abmelden</button>
+		  </div>
+	  
+		</nav>
+	</div>
+	
+	<!-- Anzeige Auftrag -->
+	<div class="col-12 px-4 py-5">
+		<h2 class="pb-2 border-bottom text-white">Detailansicht Auftrag</h2>
+		     	  
+   	
+		<div class="row gy-4">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 mb-4 col-lg-8">
+		      <form class="row g-3 rounded">
+				  
+				  <div class="row gy-3 d-flex align-items-center">
+				  
+				  	<!-- Auftragsnr und Policenr (Readonly)-->
+				  	<div class="col-md-12 d-flex">
+					  	<div class="col-md-6">
+					  		<label for="auftragsNummer" class="col-form-label text-white fs-5 fw-bold">Auftrags Nr.</label>
+						    <div class="col-md-6">
+						    	<input type="text" readonly class="form-control-plaintext text-white" id="auftragsNummer" value="10">
+						    </div>
+					   </div>
+					  	<div class="col-md-6">
+					  		<label for="policeNummer" class="col-form-label text-white fs-5 fw-bold">Police Nr.</label>
+						    <div class="col-md-6">
+						    	<input type="text" readonly class="form-control-plaintext text-white" id="policeNummer" value="555555">
+						    </div>
+					  	</div>
+				 	</div>
+				  
+				  
+					<!-- Zeigt aktuellen Status und Bearbeiter an (Readonly)-->
+					<div class="col-md-12 d-flex">
+						<div class="col-md-6">
+					  		<label for="status" class="col-form-label text-white fs-5 fw-bold">Status</label>
+							<div class="col-md-6">
+							    <input type="text" readonly class="form-control-plaintext text-white" id="status" value="offen">
+							</div>
+					  	</div>
+					  	<div class="col-md-6">
+						  	<label for="status" class="col-form-label text-white fs-5 fw-bold">Bearbeiter</label>
+							<div class="col-md-6">
+							    <input type="text" readonly class="form-control-plaintext text-white" id="status" value="Hans Schwarz">
+							 </div>
+					  	</div>
+					 </div>
+				  	
+				  	<!-- Thema und Inhalt (Readonly)-->
+				  	<div class="col-md-12 d-flex">
+				  		<div class="row col-md-12 d-flex gy-3">
+						  	<div class="col-md-6">
+						  		<!--- War mir nicht mehr sicher, wie wir es genant hatten -->
+						  		<label for="schadenstyp" class="col-form-label text-white">Schadenstyp</label>
+							    <div class="col-md-12">
+							    	<input type="text" readonly class="form-control" id="schadenstyp" value="Wasserschaden">
+							    </div>
+					   		</div>
+				  		
+					  		<div class="col-md-12">
+								 <label for="beschreibung" class="form-label text-white">Beschreibung</label>
+								 <textarea class="form-control" readonly id="beschreibung" rows="10" placeholder="..."></textarea>
+					  		</div>
+					  	</div>
+				  	</div>
+				  
+				  
+				  <!-- Button zum Übernehmen des Auftrags durch Berater. Darf nicht beim Kunden angezeigt werden. Falls der Auftrag bereits durch einen Berater übernommen wurde, dann ebenfalls nicht.-->
+				  <div class="col-md-12 d-flex">
+				  	<div class="row col-md-12 d-flex gy-3 gx-3">
+					  	<div class="col-md-6">
+					  	 	<button class="btn btn-primary" type="submit" name="auftragUebernehmen">&Uuml;bernehmen</button>
+					  	 </div>
+				  		<div class="col-md-6">
+				  		</div>
+				  		<!-- Start- und Enddatum -> bin mir nicht sicher, wann die Werte gesetzt werden -->
+					  	<div class="col-md-6">
+					  		<label for="beginndatum" class="col-form-label text-white">Beginndatum</label>
+					  		<input type="text" class="form-control" id="beginndatum" placeholder="dd/mm/yyyy">
+					  	</div>
+					  	<div class="col-md-6">
+					  		<label for="enddatum" class="col-form-label text-white">Enddatum</label>
+					  		<input type="text" class="form-control" id="enddatum" placeholder="dd/mm/yyyy">
+					  	</div>
+					  	<div class="col-md-6">
+					  	 	<button class="btn btn-primary" type="submit" id="speichern">Speichern</button>
+					  	 </div>
+				  	</div>
+				  </div>
+				  
+				  <!-- Notizen und Teilauftraege -->
+				  <div class="col-md-12 d-flex">
+				  	<div class="row col-md-12 d-flex">
+				 		<div class="accordion accordion-flush" id="accordionFlushExample">
+							<div class="accordion-item">
+							    <h2 class="accordion-header" id="flush-headingOne">
+							      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+							        Notizen
+							      </button>
+							    </h2>
+							    <div id="flush-collapseOne" class="accordion-collapse collapse bg-secondary bg-gradient text-white" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+							      <div class="accordion-body">
+							      
+							      <!-- Anzeige aller Notizen-->
+							      <div class="row col-md-12 d-flex gy-3">
+							      	<div class="col-md-12">
+							      		<div class="accordion accordion-flush" id="notiz">
+							      			
+							      			<!-- Jedes accordion-item ist eine Notiz, muss dynamsich erzeugt werden -->
+							      			<div class="accordion-item">
+											    <h2 class="accordion-header" id="flush-headingNotiz1">
+											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNotiz1" aria-expanded="false" aria-controls="flush-collapseNotiz1">
+											        16-10-2021 	Hans Schwarz
+											      </button>
+											    </h2>
+											    <div id="flush-collapseNotiz1" class="accordion-collapse collapse bg-dark bg-gradient text-white" aria-labelledby="flush-headingNotiz1" data-bs-parent="#notiz">
+											    	<div class="accordion-body">
+											    		Test 1234
+											    	</div>
+											    </div>
+							      			</div>
+							      			
+							      			<div class="accordion-item">
+											    <h2 class="accordion-header" id="flush-headingNotiz2">
+											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNotiz2" aria-expanded="false" aria-controls="flush-collapseNotiz2">
+											        17-10-2021	Hans Schwarz
+											      </button>
+											    </h2>
+											    <div id="flush-collapseNotiz2" class="accordion-collapse collapse bg-dark bg-gradient text-white" aria-labelledby="flush-headingNotiz2" data-bs-parent="#notiz">
+											    	<div class="accordion-body">
+											    		Test asdfasdfasdf
+											    	</div>
+											    </div>
+							      			</div>
+							      			
+							      				
+							      		</div>
+							      	</div>
+							      	
+							      	<!-- Button zum Erstellen einer Notiz -->
+							      	<div class="col-md-6">
+							      	
+									     <!-- Button trigger modal Notiz erstellen -->
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Erstellen</button>
+								
+										<!-- Modal Notiz erstellen -->
+										<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog modal-dialog-centered">
+										    <div class="modal-content bg-dark bg-gradient text-white">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">Notiz erstellen</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <div class="modal-body">
+										         <form>
+										          <div class="mb-3">
+										            <label for="message-text" class="col-form-label text-white">Inhalt</label>
+										            <textarea rows="10" class="form-control " id="message-text"></textarea>
+										          </div>
+										        </form>
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+										        <button type="button" class="btn btn-primary">Erstellen</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+									
+									</div>
+							      </div>
+									
+							      
+							      </div>
+							    </div>
+							  </div>
+							  <div class="accordion-item">
+							    <h2 class="accordion-header" id="flush-headingTwo">
+							      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+							       Teilauftr&auml;ge
+							      </button>
+							    </h2>
+							    <div id="flush-collapseTwo" class="accordion-collapse collapse bg-secondary bg-gradient text-white" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+							      <div class="accordion-body">
+							      
+							      <!-- Anzeige aller Teilauftraege -->
+								  <div class="row col-md-12 d-flex gy-3">
+							      	<div class="col-md-12">
+							      		<div class="accordion accordion-flush" id="teilauftraege">
+							      			
+							      			<!-- Jedes accordion-item ist eine Notiz, muss dynamsich erzeugt werden -->
+							      			<div class="accordion-item">
+											    <h2 class="accordion-header" id="flush-headingTeilauftraege1">
+											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTeilauftraege1" aria-expanded="false" aria-controls="flush-collapseTeilauftraege1">
+											        ID6544
+											      </button>
+											    </h2>
+											    <div id="flush-collapseTeilauftraege1" class="accordion-collapse collapse bg-dark bg-gradient text-white" aria-labelledby="flush-headingTeilauftraege1" data-bs-parent="#teilauftraege">
+											    	<div class="accordion-body">
+											    		<div class="row col-md-12 d-flex gy-4">
+											    			<div class="col-md-12">
+											    				Gewerk: FirmaABC<hr>
+											    				Status: Abgeschlossen<hr>
+											    			</div>
+											    			<div class="col-md-12">
+											    				Reparatur xyz
+											    			</div>
+											    			<div class="col-md-6">
+											    				<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">Bearbeiten</button>
+											    			</div>
+											    		</div>
+											    	</div>
+											    </div>
+							      			</div>
+							      			
+							      			<div class="accordion-item">
+											    <h2 class="accordion-header" id="flush-headingTeilauftraege2">
+											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTeilauftraege2" aria-expanded="false" aria-controls="flush-collapseTeilauftraege2">
+											      	ID33333
+											      </button>
+											    </h2>
+											    <div id="flush-collapseTeilauftraege2" class="accordion-collapse collapse text-white bg-dark bg-gradient" aria-labelledby="flush-headingTeilauftraege2" data-bs-parent="#teilauftraege">
+											    	<div class="accordion-body">
+											    		<div class="row col-md-12 d-flex gy-4">
+											    			<div class="col-md-12">
+											    				Gewerk: FirmaABC<hr>
+											    				Status: Abgeschlossen<hr>
+											    			</div>
+											    			<div class="col-md-12">
+											    				Reparatur xyz
+											    			</div>
+											    			<div class="col-md-6">
+											    				<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdropThree">Bearbeiten</button>
+											    			</div>
+											    		</div>
+											    	</div>
+											    </div>
+							      			</div>
+							      			
+							      				
+							      		</div>
+							      	</div>
+							      	
+							      	<!-- Button zum Erstellen eines Teilauftrags -->
+							      	<div class="col-md-6">
+							      	
+									     <!-- Button trigger modal -->
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">Erstellen</button>
+								
+										<!-- Modal Teilauftrag anlegen -->
+										<div class="modal fade" id="staticBackdropTwo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog modal-dialog-centered">
+										    <div class="modal-content bg-dark bg-gradient text-white">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">Teilauftrag erstellen</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <div class="modal-body">
+										         <form>
+										          <div class="mb-3">
+										            <label for="gewerk" class="col-form-label text-white">Gewerk</label>
+										            <select id="gewerk" class="form-select" aria-label="Gewerk">
+														<option value="0" selected>Bitte ausw&auml;hlen</option>
+													</select>
+										          </div>
+										          <div class="mb-3">
+										            <label for="auftrag" class="col-form-label text-white">Auftrag</label>
+										            <textarea rows="10" class="form-control " id="auftrag"></textarea>
+										          </div>
+										        </form>
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+										        <button type="button" class="btn btn-primary">Erstellen</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+										
+										<!-- Modal Teilauftrag bearbeiten-->
+										<div class="modal fade" id="staticBackdropThree" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog modal-dialog-centered">
+										    <div class="modal-content bg-dark bg-gradient text-white">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">Teilauftrag bearbeiten</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <div class="modal-body">
+										         <form>
+										          <div class="mb-3">
+										            <label for="gewerk" class="col-form-label text-white">Gewerk</label>
+										            <input type="text" readonly class="form-control" id="gewerk">
+										            
+										          </div>
+										          <div class="mb-3">
+										            <label for="auftrag" class="col-form-label text-white">Auftrag</label>
+										            <textarea rows="10" class="form-control " id="auftrag"></textarea>
+										          </div>
+										          <div class="mb-3">
+										            <label for="status" class="col-form-label text-white">Status</label>
+										            <select id="status" class="form-select" aria-label="status">
+														<option value="0" selected>Bitte ausw&auml;hlen</option>
+													</select>
+										          </div>
+										        </form>
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+										        <button type="button" class="btn btn-primary">Speichern</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+									
+									</div>
+							      </div>
+
+							      </div>
+							    </div>
+							  </div>
+						  </div>
+				  	 </div>
+				  </div>
+				  
+				  
+				  </div>
+				  
+		      </form>
+		    </div>
+		</div>
+	</div>
+	
+	
+	<!-- Footer -->
+	<div class="align-self-end mb-2 justify-content-around">
+		<footer class="bg-dark bg-gradient text-center text-secondary text-lg-start rounded">
+		  <div class="p-3 d-flex justify-content-around">
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Datenschutz und Cookies</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Hilfe</a>
+			  <a class="text-secondary d-none d-sm-flex" style="text-decoration: none" href="#">Impressum</a>
+			    &copy; 2021 H&ouml;fische Beamten Versicherung
+		  </div>
+		</footer>	
+	</div>
+	
+	
+  	</div>
+	</div>
+	</body>
+</html>
