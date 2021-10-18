@@ -25,6 +25,7 @@ import de.gtwsp21.handmanserv.domain.Auftrag;
 import de.gtwsp21.handmanserv.domain.Auftragstatus;
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
+import de.gtwsp21.handmanserv.exeption.NoAccessRights;
 import de.gtwsp21.handmanserv.model.AuftragModel;
 import de.gtwsp21.handmanserv.repository.BenutzerRepository;
 import de.gtwsp21.handmanserv.service.IAuftragService;
@@ -59,6 +60,22 @@ public class AuftragController {
 		return "offeneAuftraege";
 	}
 	
+	@GetMapping(value = "/get/{id}")
+	public String get(Principal principal, @PathVariable long id,Model model) {
+		
+		Benutzer b = benutzerService.findUserByEmail(principal.getName());
+		Auftrag a = auftragService.get(id);
+				
+		/*if(!a.hasAccessRights(b)) {
+			throw new NoAccessRights();
+		}*/
+		
+		model.addAttribute("auftrag",a);
+		
+		return "auftragDetailAnsicht"; 
+	}
+	
+	
 	@GetMapping(value = "/add")
 	public String addGet(Principal principal,AuftragModel auftragModel, AuftragCommand command,Model model) {
 		auftragModel.setStatus(Arrays.asList(Auftragstatus.Neu));
@@ -80,7 +97,7 @@ public class AuftragController {
 	}
 	
 	@PostMapping(value ="/add")
-	public String addPost(@Valid @ModelAttribute("auftragCommmand")  AuftragCommand command, Principal principal, BindingResult result) {
+	public String addPost(@Valid @ModelAttribute("auftragCommmand")  AuftragCommand command, Principal principal, BindingResult result,Model model) {
 		
 		if (result.hasErrors()) {
 			return "auftragAnlegen";
@@ -96,10 +113,11 @@ public class AuftragController {
 		}
 		command.setVersicherungsnehmerId(v.getId());
 	
-		auftragService.generate(command);
+		Auftrag auftrag = auftragService.generate(command);
 		
+		model.addAttribute("auftrag", auftrag);
 		
-		return "auftrag";
+		return "auftragDetailAnsicht";
 		
 	}
 

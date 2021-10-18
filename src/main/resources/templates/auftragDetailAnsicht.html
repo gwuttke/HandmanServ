@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head th:include="fragments/head :: headFragment (pageTitle='Startseite')">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
    		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,47 +13,7 @@
 	<div class="d-flex row h-100 ">
 	
 	<!-- Top navbar -->
-	<div class="col-12 align-self-start mt-3">
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
-		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
-	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
-	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    	<span class="navbar-toggler-icon"></span>
-	  	</button>
-	
-		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item active">
-		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
-		      </li>
-		     <!-- Dropdown menu 
-		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          Dropdown
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		          <a class="dropdown-item" href="#">Action</a>
-		          <a class="dropdown-item" href="#">Another action</a>
-		          <div class="dropdown-divider"></div>
-		          <a class="dropdown-item" href="#">Something else here</a>
-		        </div>
-		      </li> -->
-		      <li class="nav-item">
-		        <a class="nav-link disabled text-white" href="#">&Uuml;ber uns</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled text-white" href="#"></a>
-		      </li>
-		    </ul>
-		      
-		  	<button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Abmelden</button>
-		  </div>
-	  
-		</nav>
-	</div>
+	<div th:replace="fragments/menue :: menu" class="col-12 align-self-start mt-3" />
 	
 	<!-- Anzeige Auftrag -->
 	<div class="col-12 px-4 py-5">
@@ -62,7 +22,7 @@
    	
 		<div class="row gy-4">
 			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 mb-4 col-lg-8">
-		      <form class="row g-3 rounded">
+		      <form class="row g-3 rounded" id="auftragForm" th:object="${auftrag}">
 				  
 				  <div class="row gy-3 d-flex align-items-center">
 				  
@@ -71,13 +31,13 @@
 					  	<div class="col-md-6">
 					  		<label for="auftragsNummer" class="col-form-label text-white fs-5 fw-bold">Auftrags Nr.</label>
 						    <div class="col-md-6">
-						    	<input type="text" readonly class="form-control-plaintext text-white" id="auftragsNummer" value="10">
+						    	<input type="text" readonly class="form-control-plaintext text-white" th:field="*{nummer}" id="auftragsNummer">
 						    </div>
 					   </div>
 					  	<div class="col-md-6">
 					  		<label for="policeNummer" class="col-form-label text-white fs-5 fw-bold">Police Nr.</label>
 						    <div class="col-md-6">
-						    	<input type="text" readonly class="form-control-plaintext text-white" id="policeNummer" value="555555">
+						    	<input type="text" readonly class="form-control-plaintext text-white" th:field="*{versicherungsnehmer.policennummer}" id="policeNummer" >
 						    </div>
 					  	</div>
 				 	</div>
@@ -88,13 +48,14 @@
 						<div class="col-md-6">
 					  		<label for="status" class="col-form-label text-white fs-5 fw-bold">Status</label>
 							<div class="col-md-6">
-							    <input type="text" readonly class="form-control-plaintext text-white" id="status" value="offen">
+							    <input type="text" readonly class="form-control-plaintext text-white" th:field="*{status.text}" id="status" >
 							</div>
 					  	</div>
 					  	<div class="col-md-6">
 						  	<label for="status" class="col-form-label text-white fs-5 fw-bold">Bearbeiter</label>
 							<div class="col-md-6">
-							    <input type="text" readonly class="form-control-plaintext text-white" id="status" value="Hans Schwarz">
+							    <input type="text" readonly class="form-control-plaintext text-white" th:field="*{bauherr.nachname}" id="status" >
+							    <input type="hidden" th:field="*{bauherr.id}"/>
 							 </div>
 					  	</div>
 					 </div>
@@ -104,22 +65,22 @@
 				  		<div class="row col-md-12 d-flex gy-3">
 						  	<div class="col-md-6">
 						  		<!--- War mir nicht mehr sicher, wie wir es genant hatten -->
-						  		<label for="schadenstyp" class="col-form-label text-white">Schadenstyp</label>
+						  		<label for="schadenstyp" class="col-form-label text-white">Kurzbeschreibung</label>
 							    <div class="col-md-12">
-							    	<input type="text" readonly class="form-control" id="schadenstyp" value="Wasserschaden">
+							    	<input type="text" readonly class="form-control" id="schadenstyp" th:field="*{kurzbeschreibung}">
 							    </div>
 					   		</div>
 				  		
 					  		<div class="col-md-12">
-								 <label for="beschreibung" class="form-label text-white">Beschreibung</label>
-								 <textarea class="form-control" readonly id="beschreibung" rows="10" placeholder="..."></textarea>
+								 <label for="beschreibung" class="form-label text-white">Auftragstext</label>
+								 <textarea class="form-control" readonly id="beschreibung" rows="10" th:field="*{auftragstext}" placeholder="..."></textarea>
 					  		</div>
 					  	</div>
 				  	</div>
 				  
 				  
 				  <!-- Button zum Übernehmen des Auftrags durch Berater. Darf nicht beim Kunden angezeigt werden. Falls der Auftrag bereits durch einen Berater übernommen wurde, dann ebenfalls nicht.-->
-				  <div class="col-md-12 d-flex">
+				  <div class="col-md-12 d-flex" sec:authorize="hasRole('ROLE_BAUHERR')">
 				  	<div class="row col-md-12 d-flex gy-3 gx-3">
 					  	<div class="col-md-6">
 					  	 	<button class="btn btn-primary" type="submit" name="auftragUebernehmen">&Uuml;bernehmen</button>
@@ -157,35 +118,22 @@
 							      <!-- Anzeige aller Notizen-->
 							      <div class="row col-md-12 d-flex gy-3">
 							      	<div class="col-md-12">
-							      		<div class="accordion accordion-flush" id="notiz">
+							      		<div class="accordion accordion-flush" id="notizAccordion" th:fragment="notizen">
 							      			
 							      			<!-- Jedes accordion-item ist eine Notiz, muss dynamsich erzeugt werden -->
-							      			<div class="accordion-item">
-											    <h2 class="accordion-header" id="flush-headingNotiz1">
-											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNotiz1" aria-expanded="false" aria-controls="flush-collapseNotiz1">
-											        16-10-2021 	Hans Schwarz
+							      			<div class="accordion-item" th:each="notiz : ${auftrag.notizen}">
+											    <h2 class="accordion-header" th:id="|flush-headingNotiz${notiz.id}|">
+											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" th:data-bs-target="|#flush-collapseNotiz${notiz.id}|" aria-expanded="false" th:attr="aria-controls=|'flush-collapseNotiz${notiz.id}'|">
+											        <span th:text="${#temporals.format(notiz.date, 'dd.MM.yyyy HH:mm')}">
+											        16-10-2021</span>&nbsp<span th:text="|${notiz.benutzer.vorname} ${notiz.benutzer.nachname}|">Hans Schwarz</span>
 											      </button>
 											    </h2>
-											    <div id="flush-collapseNotiz1" class="accordion-collapse collapse bg-dark bg-gradient text-white" aria-labelledby="flush-headingNotiz1" data-bs-parent="#notiz">
+											    <div th:id="|flush-collapseNotiz${notiz.id}|" class="accordion-collapse collapse bg-dark bg-gradient text-white" th:attr="aria-labelledby='flush-headingNotiz${notiz.id}'" data-bs-parent="#notiz">
 											    	<div class="accordion-body">
-											    		Test 1234
+											    		<p th:text="${notiz.text}">Test 1234</p>
 											    	</div>
 											    </div>
 							      			</div>
-							      			
-							      			<div class="accordion-item">
-											    <h2 class="accordion-header" id="flush-headingNotiz2">
-											      <button class="accordion-button collapsed bg-dark bg-gradient text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNotiz2" aria-expanded="false" aria-controls="flush-collapseNotiz2">
-											        17-10-2021	Hans Schwarz
-											      </button>
-											    </h2>
-											    <div id="flush-collapseNotiz2" class="accordion-collapse collapse bg-dark bg-gradient text-white" aria-labelledby="flush-headingNotiz2" data-bs-parent="#notiz">
-											    	<div class="accordion-body">
-											    		Test asdfasdfasdf
-											    	</div>
-											    </div>
-							      			</div>
-							      			
 							      				
 							      		</div>
 							      	</div>
@@ -194,10 +142,10 @@
 							      	<div class="col-md-6">
 							      	
 									     <!-- Button trigger modal Notiz erstellen -->
-										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Erstellen</button>
+										<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notizModal">Erstellen</button>
 								
 										<!-- Modal Notiz erstellen -->
-										<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										<div class="modal fade" id="notizModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 										  <div class="modal-dialog modal-dialog-centered">
 										    <div class="modal-content bg-dark bg-gradient text-white">
 										      <div class="modal-header">
@@ -208,19 +156,35 @@
 										         <form>
 										          <div class="mb-3">
 										            <label for="message-text" class="col-form-label text-white">Inhalt</label>
-										            <textarea rows="10" class="form-control " id="message-text"></textarea>
+										            <textarea rows="10" class="form-control " id="notizText"></textarea>
 										          </div>
 										        </form>
 										      </div>
 										      <div class="modal-footer">
-										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-										        <button type="button" class="btn btn-primary">Erstellen</button>
+										        <button type="button" class="btn btn-secondary" id="closeNotiz" data-bs-dismiss="modal">Abbrechen</button>
+										        <button type="button" class="btn btn-primary" id="notizErstellen">Erstellen</button>
 										      </div>
 										    </div>
 										  </div>
 										</div>
 									
 									</div>
+									<script th:inline="javascript">
+									    var addNotiz = /*[[@{/notiz/add(auftrag=${auftrag.id},text='')}]]*/ '';
+									</script>
+									<script>
+										$(document).ready(function() {
+											
+									        $('#notizModal').on('click', '#notizErstellen', function () {
+										        var text = $('#notizText').val();
+										        $('#notizTtext').val('');
+										        $.post( addNotiz + text, function( data ) {
+												  $( "#notizAccordion" ).html( data );
+												  $("#notizModal #closeNotiz").click()
+												});
+									    	});
+										});
+									</script>
 							      </div>
 									
 							      

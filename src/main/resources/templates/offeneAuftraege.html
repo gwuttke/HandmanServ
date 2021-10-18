@@ -3,25 +3,12 @@
 	<head th:include="fragments/head :: headFragment (pageTitle='offene Auftr&auml;ge')">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
    		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-   		<title th:text="${pageTitle}">HandmanServ</title>
-	<!-- Font Awesome -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"rel="stylesheet"/>
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"rel="stylesheet"/>
-	<!-- MDB -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"rel="stylesheet"/>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
-	 <!-- Tabelle -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"rel="stylesheet"/>
-	<link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css"rel="stylesheet"/>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-	<!-- Bootstrap 5 -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></link>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   		<script>
+   		
+   		</script>
+   		
 	</head>
-	<body class="" style="background-color: rgba(27, 30, 31, 1.00)">
+	<body style="background-color: rgba(27, 30, 31, 1.00)">
 	
 	<!-- Main container -->
 	<div class="container-xl bg-image d-flex overflow-auto " style="background-image: url('https://images.unsplash.com/photo-1626033190220-9b6aa500d49e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80'); height: 100vh; ">
@@ -30,47 +17,7 @@
 	<div class="d-flex row h-100">
 	
 	<!-- Top navbar -->
-	<div th:replace="fragments/menue :: menu" class="col-12 align-self-start mt-3">
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient d-flex rounded">
-		<img th:src="@{/image/logo_mini.jpg}" class="img-fluid p-2" alt="Unternehmenslogo">
-	  	<a class="d-none d-sm-flex navbar-brand text-white p-3 disabled" href="#">H&ouml;fische Beamten Versicherung</a>
-	  	<button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    	<span class="navbar-toggler-icon"></span>
-	  	</button>
-	
-		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item active">
-		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
-		      </li>
-		     <!-- Dropdown menu 
-		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          Dropdown
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		          <a class="dropdown-item" href="#">Action</a>
-		          <a class="dropdown-item" href="#">Another action</a>
-		          <div class="dropdown-divider"></div>
-		          <a class="dropdown-item" href="#">Something else here</a>
-		        </div>
-		      </li> -->
-		      <li class="nav-item">
-		        <a class="nav-link disabled text-white" href="#">&Uuml;ber uns</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled text-white" href="#"></a>
-		      </li>
-		    </ul>
-		      
-		  	<button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Abmelden</button>
-		  </div>
-	  
-		</nav>
-	</div>
+	<div th:replace="fragments/menue :: menu" class="col-12 align-self-start mt-3" />
 	
 	<!-- Tabelle -->
 	<!-- Link zur mehr Infos: https://datatables.net/examples/styling/bootstrap5.html -->
@@ -90,20 +37,23 @@
 				                <th>Kontakt</th>
 				                <th>Datum</th>
 				                <th>Bearbeiter</th>
+				                <th>Kurzbeschreibung</th>
 				            </tr>
 				        </thead>
 				        <tbody th:unless="${#lists.isEmpty(auftraege)}">
-				            <tr class="text-white" th:each="auftrag : ${auftraege}">
+				            <tr th:data-id="${auftrag.id}" class="text-white" th:each="auftrag : ${auftraege}">
 				                <td th:text="${auftrag.nummer}">4</td>
 				                <td th:text="${auftrag.status.name}">Offen</td>
-				                <td th:text="|${auftrag.vorname} ${auftrag.nachname}|">Hans Zimmer</td>
-				                <td th:text="${auftrag.erstellungsdatum}">01.01.2020</td>
-				                <td th:text="|${auftrag.bauherr.vorname} ${auftrag.bauherr.nachname}|">Franz Meier</td>
+				                <td th:text="|${auftrag.versicherungsnehmer.vorname} ${auftrag.versicherungsnehmer.nachname}|">Hans Zimmer</td>
+				                <td th:text="${#temporals.format(auftrag.erstellungsdatum, 'dd.MM.yyyy HH:mm')}">01.01.2020</td>
+				                <td th:unless="${auftrag.bauherr eq null}" th:text="|${auftrag.bauherr.vorname} ${auftrag.bauherr.nachname}|">Franz Meier</td>
+				                <td th:if="${auftrag.bauherr eq null}"></td>
+				                <td th:text="${auftrag.kurzbeschreibung}">Es liegt ein Schaden vor</td>
 				            </tr>
 				        </tbody>
 				        <tbody th:if="${#lists.isEmpty(auftraege)}">
 				            <tr class="text-white">
-				                <td colspan="5">Es sind noch keine Auftr&auml;ge vorhanden.</td>
+				                <td colspan="6">Es sind noch keine Auftr&auml;ge vorhanden.</td>
 				            </tr>
 				        </tbody>
 				        <tfoot>
@@ -113,6 +63,7 @@
 				                <th>Kontakt</th>
 				                <th>Datum</th>
 				                <th>Bearbeiter</th>
+				                <th>Kurzbeschreibung</th>
 				            </tr>
 				        </tfoot>
 			    	</table>
@@ -130,6 +81,9 @@
 	</style>
 	
 	<!-- Klick effekt auf Zeile und deutsch Sprache Tabelle -->
+	<script th:inline="javascript">
+	    var auftragUrl = /*[[@{/auftrag/get/}]]*/ '';
+	</script>
 	<script>
 	$(document).ready(function() {
 	    $('#example').DataTable({
@@ -145,8 +99,7 @@
         },}});
         var table = $('#example').DataTable();
         $('#example tbody').on('click', 'tr', function () {
-        var data = table.row( this ).data();
-        alert( 'You clicked on '+data[0]+'\'s row' );
+	        window.location.href = auftragUrl+$(this).data('id');
     	});
 	});
 	</script>

@@ -19,6 +19,7 @@ import de.gtwsp21.handmanserv.domain.Bauherr;
 import de.gtwsp21.handmanserv.domain.Benutzer;
 import de.gtwsp21.handmanserv.domain.Berater;
 import de.gtwsp21.handmanserv.domain.Gebiet;
+import de.gtwsp21.handmanserv.domain.ITMitarbeiter;
 import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
 import de.gtwsp21.handmanserv.model.helper.GebietHelper;
 import de.gtwsp21.handmanserv.repository.AuftragRepository;
@@ -60,8 +61,9 @@ public class AuftragService implements IAuftragService {
 			auftraege.addAll(auftragRepository.findByAdresseGebietInAndBauherr(((Bauherr) steller).getGebiete(),null));
 		}else if(steller instanceof Berater && v != null) {
 			auftraege.addAll(auftragRepository.findByVersicherungsnehmer(v));
-			
 		}else if(steller instanceof BackofficeMitarbeiter) {
+			auftraege.addAll(auftragRepository.findAll());
+		}else if(steller instanceof ITMitarbeiter) {
 			auftraege.addAll(auftragRepository.findAll());
 		}
 		
@@ -98,6 +100,11 @@ public class AuftragService implements IAuftragService {
 		
 		return auftrag;
 		
+	}
+
+	@Override
+	public Auftrag get(Long id) {
+		return auftragRepository.getById(id);
 	}
 	
 	

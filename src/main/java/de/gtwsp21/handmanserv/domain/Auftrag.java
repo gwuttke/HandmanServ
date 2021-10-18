@@ -1,6 +1,7 @@
 package de.gtwsp21.handmanserv.domain;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -206,6 +207,33 @@ public class Auftrag {
 
 	public void setNummer(String nummer) {
 		this.nummer = nummer;
+	}
+	
+	public boolean hasAccessRights(Benutzer b) {
+		if(b != null) {
+			if(b instanceof BackofficeMitarbeiter || b instanceof ITMitarbeiter) {
+				return true;
+			}			
+			if(b instanceof Versicherungsnehmer || b instanceof Bauherr || b instanceof Berater) {
+				Long id = b.getId();
+				if(id != null && !id.equals(0L)) {
+					if(Arrays.asList(versicherungsnehmer.getId(),
+							bauherr==null?0L:bauherr.getId(),angelegtVon.getId()).contains(id)){
+						return true;
+					}
+					if(b instanceof Berater) {
+						Berater ber =	(Berater) b;
+					 	List<Gebiet> gebiete = ber.getGebiete();
+						return gebiete != null && gebiete.contains(adresse.getGebiet());
+					}else if(b instanceof Bauherr && this.bauherr != null) {
+						Bauherr bau = (Bauherr) b;
+						List<Gebiet> gebiete = bau.getGebiete();
+						return gebiete != null && bau.getGebiete().contains(adresse.getGebiet());
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 }

@@ -12,5 +12,7 @@ public interface IAuftragService {
 	 List<Auftrag> listAuftraege(Benutzer b,Versicherungsnehmer v);
 	 
 	 Auftrag generate(AuftragCommand command);
+	 
+	 Auftrag get(Long id);
 
 }

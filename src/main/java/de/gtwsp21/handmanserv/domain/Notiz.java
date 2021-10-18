@@ -1,12 +1,18 @@
 package de.gtwsp21.handmanserv.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,6 +31,32 @@ public class Notiz {
 	private String text;
 	
 	private LocalDateTime date;
+
+	@ManyToOne
+	@JoinTable(name = "Auftrag_Notiz",
+    joinColumns = @JoinColumn(name = "NotizId"),
+    inverseJoinColumns = @JoinColumn(name = "AuftragId"))
+	private Auftrag auftrag;
+	
+	public Auftrag getAuftrag() {
+		return auftrag;
+	}
+
+	public void setAuftrag(Auftrag auftrag) {
+		this.auftrag = auftrag;
+	}
+
+	protected Notiz() {
+		super();
+	}
+
+	public Notiz(Benutzer benutzer, Auftrag auftrag, String text) {
+		this();
+		this.benutzer = benutzer;
+		this.auftrag = auftrag;
+		this.text = text;
+		this.date = LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;
