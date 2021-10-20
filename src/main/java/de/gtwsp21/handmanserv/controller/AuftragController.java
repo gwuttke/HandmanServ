@@ -89,7 +89,7 @@ public class AuftragController {
 			auftragModel.setVersicherungsnehmer(versicherungsnehmer);
 		}else {
 		auftragModel.setPolicen(benutzerService.findAllVersicherungsnehmer().stream()
-				.map(Versicherungsnehmer::getPolicennummer).toList());
+				.map(Versicherungsnehmer::getPolicennummer).collect(Collectors.toList()));
 		}
 		model.addAttribute("command", command);
 		model.addAttribute("data",auftragModel);

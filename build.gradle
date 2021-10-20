@@ -6,8 +6,8 @@ plugins {
 
 group = 'de.gtwsp21'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 8
+targetCompatibility = 8
 
 repositories {
 	mavenCentral()
@@ -32,14 +32,22 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+ tasks.withType(Copy).all {
+    duplicatesStrategy 'exclude'
+  }
+
 jar {
     manifest {
         attributes(
                 'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
         )
     }
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    eachFile {
+    	duplicatesStrategy 'exclude'
+    }
 }
 
 task stage(dependsOn: ['build', 'clean']){
