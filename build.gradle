@@ -32,14 +32,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-springBoot {
-	mainClass = 'de.gtwsp21.handmanserv.HandmanServApplication'
-}
-
 jar {
     manifest {
         attributes "Main-Class": "de.gtwsp21.handmanserv.HandmanServApplication"
-        attributes "Class-Path": configurations.compile.collect { it.absolutePath }.join(" ")
     }
 }
 
