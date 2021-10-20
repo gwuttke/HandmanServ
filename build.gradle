@@ -46,7 +46,7 @@ task stage(dependsOn: ['build', 'clean']){
 
 task copyToLib(type: Copy) {
     into "$buildDir/libs"
-    from(configurations.implementation)
+    from(configurations.compile)
 }
 
 stage.dependsOn(copyToLib)
