@@ -38,19 +38,21 @@ jar {
                 'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
         )
     }
+    from {
+        configurations.compileClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 task stage(dependsOn: ['build', 'clean']){
 	build.mustRunAfter clean
+	//build.dependsOn(copyToLib)
 }
-
+/*
 task copyToLib(type: Copy) {
-    into "$buildDir/libs"
-    from(configurations.compileClasspath)
+    into "$buildDir/output/libs"
+    from(configurations.runtime)
 }
-
-stage.dependsOn(copyToLib)
-
+*/
 test {
 	useJUnitPlatform()
 }
