@@ -32,12 +32,12 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
-        )
-    }
+springBoot {
+	mainClass = 'de.gtwsp21.handmanserv.HandmanServApplication'
+}
+
+bootWar {
+	classpath configurations.developmentOnly
 }
 
 task stage(dependsOn: ['build', 'clean']){
