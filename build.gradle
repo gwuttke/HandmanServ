@@ -36,6 +36,12 @@ springBoot {
 	mainClass = 'de.gtwsp21.handmanserv.HandmanServApplication'
 }
 
+bootJar {
+	manifest {
+		attributes 'Start-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
+	}
+}
+
 task stage(dependsOn: ['build', 'clean']){
 	build.mustRunAfter clean
 	//build.dependsOn(copyToLib)
