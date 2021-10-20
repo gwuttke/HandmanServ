@@ -38,9 +38,8 @@ jar {
                 'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
         )
     }
-    from {
-        configurations.compileClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 task stage(dependsOn: ['build', 'clean']){
