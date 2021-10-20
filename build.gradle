@@ -34,7 +34,6 @@ dependencies {
 
 springBoot {
 	mainClass = 'de.gtwsp21.handmanserv.HandmanServApplication'
-    executable = true 
 }
 
 task stage(dependsOn: ['build', 'clean']){
