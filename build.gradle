@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
+	implementation 'mysql:mysql-connector-java:8.0.27'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
