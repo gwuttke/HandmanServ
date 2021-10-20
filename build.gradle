@@ -38,9 +38,8 @@ springBoot {
 
 jar {
     manifest {
-        attributes(
-                'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
-        )
+        attributes "Main-Class": "de.gtwsp21.handmanserv.HandmanServApplication"
+        attributes "Class-Path": configurations.compile.collect { it.absolutePath }.join(" ")
     }
 }
 
