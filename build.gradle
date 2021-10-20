@@ -39,6 +39,7 @@ springBoot {
 bootJar {
 	manifest {
 		attributes 'Start-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
+		attributes 'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
 	}
 }
 
