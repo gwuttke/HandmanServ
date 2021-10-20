@@ -32,21 +32,11 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
- tasks.withType(Copy).all {
-    duplicatesStrategy 'exclude'
-  }
-
 jar {
     manifest {
         attributes(
                 'Main-Class': 'de.gtwsp21.handmanserv.HandmanServApplication'
         )
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    eachFile {
-    	duplicatesStrategy 'exclude'
     }
 }
 
