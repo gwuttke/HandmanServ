@@ -1,1 +1,1 @@
-web: java -jar build/libs/HandmanServ-0.0.1-SNAPSHOT.jar -Dspring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+web: java -jar build/libs/HandmanServ-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT -Dspring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
