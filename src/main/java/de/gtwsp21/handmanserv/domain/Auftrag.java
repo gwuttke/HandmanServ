@@ -29,12 +29,15 @@ public class Auftrag {
 	private Versicherungsnehmer versicherungsnehmer;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@Column(name = "adresse_id")
 	private Adresse adresse;
 	
 	@OneToOne
+	@Column(name = "bauherr_id")
 	private Bauherr bauherr;
 	
 	@OneToOne
+	@Column(name = "angelegt_von_id")
 	private Benutzer angelegtVon;
 	
 	private LocalDateTime erstellungsdatum;
