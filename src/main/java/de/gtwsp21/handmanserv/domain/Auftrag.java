@@ -26,6 +26,7 @@ public class Auftrag {
 	private Long id;
 	
 	@OneToOne
+	@JoinColumn(name = "versicherungsnehmer_benutzer_id")
 	private Versicherungsnehmer versicherungsnehmer;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -33,7 +34,7 @@ public class Auftrag {
 	private Adresse adresse;
 	
 	@OneToOne
-	@JoinColumn(name = "bauherr_id")
+	@JoinColumn(name = "bauherr_benutzer_id")
 	private Bauherr bauherr;
 	
 	@OneToOne
