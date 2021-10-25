@@ -8,7 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="BackofficeMitarbeiter")
+@Table(name="backoffice_mitarbeiter")
 @PrimaryKeyJoinColumns({
     @PrimaryKeyJoinColumn(name="benutzer_id", 
         referencedColumnName="id")})

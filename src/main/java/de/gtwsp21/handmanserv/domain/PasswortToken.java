@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "PasswortToken",uniqueConstraints=
+@Table(name = "passwort_token",uniqueConstraints=
 @UniqueConstraint(columnNames={"token"}))
 
 public class PasswortToken {
@@ -28,7 +28,7 @@ public class PasswortToken {
 	private String token;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "email",referencedColumnName = "eMailadresse", unique = true)
+	@JoinColumn(name = "email",referencedColumnName = "e_mailadresse", unique = true)
 	private Benutzer benutzer;
 	
 	private LocalDateTime ablaufdatum;

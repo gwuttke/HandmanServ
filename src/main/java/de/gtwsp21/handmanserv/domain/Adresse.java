@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Adresse")
+@Table(name = "adresse")
 public class Adresse {
 	
 	@Id

@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Notiz")
+@Table(name = "notiz")
 public class Notiz {
 
 	@Id
@@ -32,10 +32,10 @@ public class Notiz {
 	
 	private LocalDateTime date;
 
-	@ManyToOne
-	@JoinTable(name = "Auftrag_Notiz",
-    joinColumns = @JoinColumn(name = "NotizId"),
-    inverseJoinColumns = @JoinColumn(name = "AuftragId"))
+	@ManyToOne(targetEntity = Auftrag.class)
+	@JoinTable(name = "auftrag_notiz",
+	joinColumns = @JoinColumn(name = "notiz_id"),
+    inverseJoinColumns = @JoinColumn(name = "auftrag_id",referencedColumnName = "id"))
 	private Auftrag auftrag;
 	
 	public Auftrag getAuftrag() {

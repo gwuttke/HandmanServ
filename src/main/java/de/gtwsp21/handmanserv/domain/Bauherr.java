@@ -12,9 +12,9 @@ import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Bauherr")
+@Table(name = "bauherr")
 @PrimaryKeyJoinColumns({
-    @PrimaryKeyJoinColumn(name="Benutzer_id", 
+    @PrimaryKeyJoinColumn(name="benutzer_id", 
         referencedColumnName="id")})
 public class Bauherr extends Benutzer {
 	
@@ -36,9 +36,9 @@ public class Bauherr extends Benutzer {
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "Gebiet_Bauherr",
-    joinColumns = @JoinColumn(name = "BauherrId"),
-    inverseJoinColumns = @JoinColumn(name = "GebietId"))
+	@JoinTable(name = "gebiet_bauherr",
+    joinColumns = @JoinColumn(name = "bauherr_id"),
+    inverseJoinColumns = @JoinColumn(name = "gebiet_id"))
 	private List<Gebiet> gebiete;
 	
 	public List<Gebiet> getGebiete() {

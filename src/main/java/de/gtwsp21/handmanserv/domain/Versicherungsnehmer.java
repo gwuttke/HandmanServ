@@ -8,9 +8,9 @@ import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Versicherungsnehmer")
+@Table(name = "versicherungsnehmer")
 @PrimaryKeyJoinColumns({
-        @PrimaryKeyJoinColumn(name="Benutzer_id", 
+        @PrimaryKeyJoinColumn(name="benutzer_id", 
             referencedColumnName="id")})
 public class Versicherungsnehmer extends Benutzer {
 

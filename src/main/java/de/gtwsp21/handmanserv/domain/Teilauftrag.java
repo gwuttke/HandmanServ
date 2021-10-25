@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Teilauftrag", uniqueConstraints = @UniqueConstraint(columnNames = {"nummer"},name = "UX_Nummer"))
+@Table(name = "teilauftrag", uniqueConstraints = @UniqueConstraint(columnNames = {"nummer"},name = "UX_Nummer"))
 public class Teilauftrag {
 
 	@Id
@@ -45,9 +45,9 @@ public class Teilauftrag {
 	private String nummer;
 	
 	@OneToMany
-	@JoinTable(name = "Teilauftrag_Notiz",
-    joinColumns = @JoinColumn(name = "TeilauftragId"),
-    inverseJoinColumns = @JoinColumn(name = "NotizId"))
+	@JoinTable(name = "teilauftrag_notiz",
+    joinColumns = @JoinColumn(name = "teilauftrag_id"),
+    inverseJoinColumns = @JoinColumn(name = "notiz_id"))
 	private List<Notiz> notizen;
 	
 }
