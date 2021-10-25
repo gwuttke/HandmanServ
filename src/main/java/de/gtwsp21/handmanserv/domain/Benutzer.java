@@ -77,6 +77,7 @@ public abstract class Benutzer implements Serializable {
 		this.telefonnummer = telefonnummer;
 	}
 
+	@Column(name = "letzte_anmeldung")
 	private LocalDateTime letzteAnmeldung;
 	
 	private String telefonnummer;

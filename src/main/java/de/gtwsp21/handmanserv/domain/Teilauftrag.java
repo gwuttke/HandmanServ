@@ -49,5 +49,85 @@ public class Teilauftrag {
     joinColumns = @JoinColumn(name = "teilauftrag_id"),
     inverseJoinColumns = @JoinColumn(name = "notiz_id"))
 	private List<Notiz> notizen;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Auftrag getAuftrag() {
+		return auftrag;
+	}
+
+	public void setAuftrag(Auftrag auftrag) {
+		this.auftrag = auftrag;
+	}
+
+	public Handwerker getHandwerker() {
+		return handwerker;
+	}
+
+	public void setHandwerker(Handwerker handwerker) {
+		this.handwerker = handwerker;
+	}
+
+	public LocalDateTime getBeginndatum() {
+		return beginndatum;
+	}
+
+	public void setBeginndatum(LocalDateTime beginndatum) {
+		this.beginndatum = beginndatum;
+	}
+
+	public LocalDateTime getEnddatum() {
+		return enddatum;
+	}
+
+	public void setEnddatum(LocalDateTime enddatum) {
+		this.enddatum = enddatum;
+	}
+
+	public Gewerk getGewerk() {
+		return gewerk;
+	}
+
+	public void setGewerk(Gewerk gewerk) {
+		this.gewerk = gewerk;
+	}
+
+	public String getAuftragstext() {
+		return auftragstext;
+	}
+
+	public void setAuftragstext(String auftragstext) {
+		this.auftragstext = auftragstext;
+	}
+
+	public Auftragstatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(Auftragstatus status) {
+		this.status = status;
+	}
+
+	public String getNummer() {
+		return nummer;
+	}
+
+	public void setNummer(String nummer) {
+		this.nummer = nummer;
+	}
+
+	public List<Notiz> getNotizen() {
+		return notizen;
+	}
+
+	public void setNotizen(List<Notiz> notizen) {
+		this.notizen = notizen;
+	}
 	
 }
