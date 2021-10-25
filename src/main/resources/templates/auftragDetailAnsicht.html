@@ -83,24 +83,42 @@
 				  <div class="col-md-12 d-flex" sec:authorize="hasRole('ROLE_BAUHERR')">
 				  	<div class="row col-md-12 d-flex gy-3 gx-3">
 					  	<div class="col-md-6">
-					  	 	<button class="btn btn-primary" type="submit" name="auftragUebernehmen">&Uuml;bernehmen</button>
+					  	 	<button class="btn btn-primary" type="submit" th:data-auftragid="${auftrag.id}" name="auftragUebernehmen">&Uuml;bernehmen</button>
 					  	 </div>
 				  		<div class="col-md-6">
 				  		</div>
 				  		<!-- Start- und Enddatum -> bin mir nicht sicher, wann die Werte gesetzt werden -->
 					  	<div class="col-md-6">
 					  		<label for="beginndatum" class="col-form-label text-white">Beginndatum</label>
-					  		<input type="text" class="form-control" id="beginndatum" placeholder="dd/mm/yyyy">
+					  		<input type="text" th:readonly="${hasRole('ROLE_BAUHERR')}" class="form-control" id="beginndatum" placeholder="dd.mm.yyyy">
 					  	</div>
 					  	<div class="col-md-6">
 					  		<label for="enddatum" class="col-form-label text-white">Enddatum</label>
-					  		<input type="text" class="form-control" id="enddatum" placeholder="dd/mm/yyyy">
+					  		<input type="text" th:readonly="${hasRole('ROLE_BAUHERR')}" class="form-control" id="enddatum" placeholder="dd.mm.yyyy">
 					  	</div>
 					  	<div class="col-md-6">
-					  	 	<button class="btn btn-primary" type="submit" id="speichern">Speichern</button>
+					  	 	<button class="btn btn-primary" sec:authorize="hasRole('ROLE_BAUHERR')" type="submit" id="bauherrSpeichern">Speichern</button>
 					  	 </div>
 				  	</div>
 				  </div>
+				  
+				  <script th:inline="javascript" sec:authorize="hasRole('ROLE_BAUHERR')">
+					    var  saveAuftragUrl = /*[[@{/auftrag/save}]]*/ '';
+					</script>
+				  <script sec:authorize="hasRole('ROLE_BAUHERR')" th:inline="javascript">
+				  	$(document).ready(function() {
+											
+				        $('body').on('click', '#bauherrSpeichern', function () {
+					        var text = $('#notizText').val();
+					        $('#notizTtext').val('');
+					        $.post( addNotiz + text, function( data ) {
+							  $( "#notizAccordion" ).html( data );
+							  $("#notizModal #closeNotiz").click()
+							});
+				    	});
+					});
+				  </script>
+				  
 				  
 				  <!-- Notizen und Teilauftraege -->
 				  <div class="col-md-12 d-flex">
