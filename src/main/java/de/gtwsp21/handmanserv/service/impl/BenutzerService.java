@@ -26,6 +26,7 @@ import de.gtwsp21.handmanserv.domain.Rolle;
 import de.gtwsp21.handmanserv.domain.Versicherungsnehmer;
 import de.gtwsp21.handmanserv.domain.compositid.RollenId;
 import de.gtwsp21.handmanserv.exception.BenutzerExistiertSchonException;
+import de.gtwsp21.handmanserv.init.ConfigProperties;
 import de.gtwsp21.handmanserv.model.RegistrierenModel;
 import de.gtwsp21.handmanserv.model.helper.BenutzerHelper;
 import de.gtwsp21.handmanserv.model.helper.GebietHelper;
@@ -78,7 +79,13 @@ public class BenutzerService implements IBenutzerService {
     
 	@Autowired
 	private GebietHelper gebietHelper;
-
+	
+	@Autowired
+	private ConfigProperties configProperties;
+	
+	@Autowired
+	private PasswordEncoder pEncoder;
+	
     @Override
 	public PasswortToken createVerificationTokenForUser(Benutzer user) {
     	PasswortToken pt = passwortTokenRepository.findByBenutzer(user);
@@ -106,6 +113,7 @@ public class BenutzerService implements IBenutzerService {
 	public PasswortToken getVerificationToken(String token) {
 		return passwortTokenRepository.findByToken(token);
 	}
+	
 	@Override
 	public void sendNewPasswortToken(String token, String eMail) {
 		Benutzer b = null;
@@ -123,7 +131,7 @@ public class BenutzerService implements IBenutzerService {
 		}
 		
 		if(ptoken != null) {
-			mailService.sendResetTokenEmail(ptoken);
+			this.userSetPasswort(b, true, ptoken);
 		}
 		
 	}
@@ -246,10 +254,31 @@ public class BenutzerService implements IBenutzerService {
          Rolle r = new Rolle(new RollenId(user.geteMailadresse(), user.getRolleForSecurity()[0]));
          rollenRepository.save(r);
          checkAndFillBenutzerGewerkAndGebiet(user, accountDto.getGewerke(), accountDto.getGebiete());
-         PasswortToken pt = createVerificationTokenForUser(user);
-         mailService.sendInitialTokenEmail(pt);
+         userSetPasswort(user,false);
          return user;
     }
+	
+	
+	private void userSetPasswort(final Benutzer user,boolean isResetToken) {
+		userSetPasswort(user,isResetToken,null);
+	}
+
+	private void userSetPasswort(final Benutzer user,boolean isResetToken,PasswortToken pt) {
+		if(configProperties.isTestmodus()) {
+        	 user.setEnabled(true);
+        	 user.setPasswort(pEncoder.encode("admin"));
+        	 benutzerRepository.save(user);
+         }else {
+	        if(pt == null) {
+	        	pt = createVerificationTokenForUser(user);
+	        }
+	        if(isResetToken) { 
+	        	mailService.sendResetTokenEmail(pt);
+	        }else { 
+	        	mailService.sendInitialTokenEmail(pt);
+	        }
+         }
+	}
 
 	private boolean emailExists(final String email) {
 		return benutzerRepository.findByeMailadresse(email) != null;
