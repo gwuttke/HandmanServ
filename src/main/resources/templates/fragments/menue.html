@@ -10,10 +10,10 @@
 		  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
 		      <li class="nav-item active">
-		        <a class="nav-link text-white" href="#">Startseite <span class="sr-only">(current)</span></a>
+		        <a class="nav-link text-white" th:href="@{/}" href="#">Startseite <span class="sr-only">(current)</span></a>
 		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link text-white" href="#">Kontoeinstellungen</a>
+		      <li class="nav-iteyvm">
+		        <a class="nav-link text-white" th:href="@{/kontoeinstellungen}" href="#">Kontoeinstellungen</a>
 		      </li>
 		      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ITMitarbeiter','ROLE_BERATER')">
 		        <a class="nav-link text-white" th:href="@{/user/erfassen}" href="#">Benutzer regstrieren</a>
